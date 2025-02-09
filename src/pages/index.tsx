@@ -36,6 +36,13 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
   const handleMoveDetail = (id:string) => router.push("/"+ id)
 
   const handleFilter = (filter: (typeof FilterType)[number]) => {
+    try {
+      axios.get('https://m.naver.com').then((response) => {
+        console.error(response.data);
+      });
+    } catch (error) {
+      console.error('Error updating store:', error);
+    }
     setFilter(filter);
     router.push({
       pathname: router.pathname,
@@ -49,14 +56,6 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
       pathname: router.pathname,
       query: { ...router.query, duration: newDuration },
     });
-
-    try {
-      axios.get('https://m.naver.com').then((response) => {
-        console.error(response.data);
-      });
-    } catch (error) {
-      console.error('Error updating store:', error);
-    }
   };
 
   const handlePageChange = (newPage: number) => {
@@ -80,7 +79,7 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
             <Table>
               <TableHeader>
                 <TableRow className='pointer-events-none'>
-                  <TableHead>No.</TableHead>
+                  <TableHead>No.1</TableHead>
                   <TableHead>식당명</TableHead>
                   <TableHead>이벤트 메뉴</TableHead>
                   <TableHead>참여인원</TableHead>
