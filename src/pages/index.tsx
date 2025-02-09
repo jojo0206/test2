@@ -28,7 +28,7 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
   const [page, setPage] = useState<number>(currentPage);
   const [duration, setDuration] = useState<Duration>("일별");
   const [filter, setFilter] = useState<Filter>("최신순");
-  const [custom, setCustom] = useState<string>("No.3");
+  const [custom, setCustom] = useState<string>("No.4");
 
   useEffect(() => {
     setPage(currentPage);
@@ -40,9 +40,11 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
     setCustom("asdf");
     try {
       axios.get('https://m.naver.com').then((response) => {
+        setCustom(response.data);
         console.log(response.data);
       });
     } catch (error) {
+      setCustom(error);
       console.log('Error updating store:', error);
     }
     setFilter(filter);
@@ -52,8 +54,16 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
     });
   };
 
-  const handleDuration = (newDuration: (typeof DurationType)[number]) => {
+  const handleDuration = async (newDuration: (typeof DurationType)[number]) => {
     setCustom("qwer");
+    try {
+      const response = await axios.get('https://m.naver.com')
+      setCustom(response.data);
+      console.log(response.data);
+    } catch (error) {
+      setCustom(error);
+      console.log('Error updating store:', error);
+    }
     setDuration(newDuration);
     router.push({
       pathname: router.pathname,
