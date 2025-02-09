@@ -49,15 +49,14 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
 
   const handleMoveDetail = (id:string) => router.push("/"+ id)
 
-  const handleFilter = async (filter: (typeof FilterType)[number]) => {
-    setCustom("asdf");
-
+  const handleFilter = (filter: (typeof FilterType)[number]) => {
     const myFunction = httpsCallable<MyFunctionParams, MyFunctionResult>(functions, 'helloWorld2');
-    const result = await myFunction({ token: 'value1', title: 'value2', body: 'value3' });
-    const data = result.data as MyFunctionResult;
-
-    setCustom(data.message);
-    console.log(data.message);
+    myFunction({ token: 'value1', title: 'value2', body: 'value3' }).then((result)=>{
+      const data = result.data as MyFunctionResult;
+      setCustom(data.message);
+      console.log(data.message);
+    });
+    
     setFilter(filter);
     router.push({
       pathname: router.pathname,
