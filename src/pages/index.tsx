@@ -22,6 +22,11 @@ interface StoreEventProps {
   currentPage: number;
 }
 
+interface MyFunctionResult {
+  message: string;
+  timestamp: number;
+}
+
 const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
   const router = useRouter();
   const {duration: currentDuration , filter: currentFilter } = router.query as QueryParams;
@@ -39,11 +44,10 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
   const handleFilter = async (filter: (typeof FilterType)[number]) => {
     setCustom("asdf");
 
-    const myFunction = httpsCallable(functions, 'helloWorld2');
-    
+    const myFunction = httpsCallable<{token: string, title: string, body: string}, MyFunctionResult>(functions, 'helloWorld2');
     const res = await myFunction({ token: 'value1', title: 'value2', body: 'value3' });
-    setCustom(res.data);
-    console.log(res.data);
+    setCustom(res.data.message);
+    console.log(res.data.message);
     setFilter(filter);
     router.push({
       pathname: router.pathname,
