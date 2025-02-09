@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import { Duration, DurationType, Filter, FilterType, Menu, Store, StoreEvent } from '@/interface';
 import { ParsedUrlQuery } from 'querystring';
 import { getFunctions, httpsCallable } from 'firebase/functions';
-import axios from "axios";
+import { axios, AxiosResponse } from "axios";
 
 interface QueryParams extends ParsedUrlQuery {
   page?: string;
@@ -33,7 +33,6 @@ interface MyFunctionParams {
 // 함수가 반환할 결과의 타입 정의
 interface MyFunctionResult {
   message: string;
-  timestamp: number;
 }
 
 const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
@@ -52,7 +51,8 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
 
   const handleFilter = (filter: (typeof FilterType)[number]) => {
     axios.get('/api/restaurants/update').then((res: unknown)=>{
-      setCustom('ok');
+      const result = res as AxiosResponse<MyFunctionResult>;
+      setCustom(result.message);
     }).catch((error: unknown)=>{
       let errorMessage: string;
       if (error instanceof Error) {
