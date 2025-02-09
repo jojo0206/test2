@@ -1,10 +1,29 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getFirestore, doc, updateDoc } from 'firebase/firestore';
-import { firebaseApp } from '@/firebase/firebaseClient';
+import { firebaseApp, functions } from '@/firebase/firebaseClient';
+import { getFunctions, httpsCallable } from 'firebase/functions';
+import { AxiosResponse } from "axios";
+
+// 함수에 전달할 매개변수의 타입 정의
+interface MyFunctionParams {
+  token: string;
+  title: string;
+  body: string;
+}
+
+// 함수가 반환할 결과의 타입 정의
+interface MyFunctionResult {
+  message: string;
+}
+
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    res.status(200).json({ message: 'good' });
+      const myFunction = httpsCallable<MyFunctionParams, MyFunctionResult>(functions, 'helloWorld2');
+      const res = await myFunction({ token: 'value1', title: 'value2', body: 'value3' });
+      const result = res as AxiosResponse<MyFunctionResult>;
+      const data = result.data as MyFunctionResult;
+      res.status(200).json({ message: data });
   }
 
   if (req.method === 'POST') {
