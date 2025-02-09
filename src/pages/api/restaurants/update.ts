@@ -14,7 +14,7 @@ interface MyFunctionParams {
 
 // 함수가 반환할 결과의 타입 정의
 interface MyFunctionResult {
-  message: string;
+  result: string;
 }
 
 
@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const res2 = await myFunction({ token: 'value1', title: 'value2', body: 'value3' });//({ token: 'value1', title: 'value2', body: 'value3' });
       const result = res2 as AxiosResponse<MyFunctionResult>;
       const data = result.data as MyFunctionResult;
-      res.status(200).json({ message: data });
+      res.status(200).json({ message: data.result });
     } catch (error) {
       let errorMessage: string;
       if (error instanceof FirebaseError) {
