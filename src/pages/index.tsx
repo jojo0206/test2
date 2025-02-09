@@ -9,7 +9,8 @@ import { useState, useEffect } from 'react';
 import { Duration, DurationType, Filter, FilterType, Menu, Store, StoreEvent } from '@/interface';
 import { ParsedUrlQuery } from 'querystring';
 import { getFunctions, httpsCallable } from 'firebase/functions';
-import { axios, AxiosResponse } from "axios";
+import axios from "axios";
+import { AxiosResponse } from "axios";
 
 interface QueryParams extends ParsedUrlQuery {
   page?: string;
