@@ -38,10 +38,10 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
   const handleFilter = (filter: (typeof FilterType)[number]) => {
     try {
       axios.get('https://m.naver.com').then((response) => {
-        console.error(response.data);
+        console.log(response.data);
       });
     } catch (error) {
-      console.error('Error updating store:', error);
+      console.log('Error updating store:', error);
     }
     setFilter(filter);
     router.push({
@@ -79,7 +79,7 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
             <Table>
               <TableHeader>
                 <TableRow className='pointer-events-none'>
-                  <TableHead>No.1</TableHead>
+                  <TableHead>No.2</TableHead>
                   <TableHead>식당명</TableHead>
                   <TableHead>이벤트 메뉴</TableHead>
                   <TableHead>참여인원</TableHead>
