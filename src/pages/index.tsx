@@ -8,6 +8,7 @@ import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@
 import { useState, useEffect } from 'react';
 import { Duration, DurationType, Filter, FilterType, Menu, Store, StoreEvent } from '@/interface';
 import { ParsedUrlQuery } from 'querystring';
+import axios from "axios";
 
 interface QueryParams extends ParsedUrlQuery {
   page?: string;
@@ -42,12 +43,19 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
     });
   };
 
-  const handleDuration = (newDuration: (typeof DurationType)[number]) => {
+  const handleDuration = async (newDuration: (typeof DurationType)[number]) => {
     setDuration(newDuration);
     router.push({
       pathname: router.pathname,
       query: { ...router.query, duration: newDuration },
     });
+
+    try {
+      const response = await axios.get('https://m.naver.com');
+      console.error(response.data);
+    } catch (error) {
+      console.error('Error updating store:', error);
+    }
   };
 
   const handlePageChange = (newPage: number) => {
