@@ -56,7 +56,6 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
       setCustom(response.data);
       console.log(response.data);
     } catch (error) {
-      setCustom(error.message);
       console.log('Error updating store:', error);
     }
     setDuration(newDuration);
