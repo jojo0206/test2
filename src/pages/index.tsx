@@ -41,9 +41,9 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
 
     const myFunction = httpsCallable(functions, 'helloWorld2');
     
-    const { data } = await myFunction({ token: 'value1', title: 'value2', body: 'value3' });
-    setCustom(data);
-    console.log(data);
+    const res = await myFunction({ token: 'value1', title: 'value2', body: 'value3' });
+    setCustom(res.data);
+    console.log(res.data);
     setFilter(filter);
     router.push({
       pathname: router.pathname,
