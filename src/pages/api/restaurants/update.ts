@@ -21,7 +21,7 @@ interface MyFunctionResult {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
-      const myFunction = httpsCallable(functions, 'helloWorld2');
+      const myFunction = httpsCallable(functions, 'helloWorld3');
       const res2 = await myFunction({ token: 'value1', title: 'value2', body: 'value3' });//({ token: 'value1', title: 'value2', body: 'value3' });
       const result = res2 as AxiosResponse<MyFunctionResult>;
       const data = result.data as MyFunctionResult;
