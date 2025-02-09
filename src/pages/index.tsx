@@ -28,6 +28,7 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
   const [page, setPage] = useState<number>(currentPage);
   const [duration, setDuration] = useState<Duration>("일별");
   const [filter, setFilter] = useState<Filter>("최신순");
+  const [custom, setCustom] = useState<string>("No.3");
 
   useEffect(() => {
     setPage(currentPage);
@@ -36,6 +37,7 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
   const handleMoveDetail = (id:string) => router.push("/"+ id)
 
   const handleFilter = (filter: (typeof FilterType)[number]) => {
+    setCustom("asdf");
     try {
       axios.get('https://m.naver.com').then((response) => {
         console.log(response.data);
@@ -51,6 +53,7 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
   };
 
   const handleDuration = (newDuration: (typeof DurationType)[number]) => {
+    setCustom("qwer");
     setDuration(newDuration);
     router.push({
       pathname: router.pathname,
@@ -79,7 +82,7 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
             <Table>
               <TableHeader>
                 <TableRow className='pointer-events-none'>
-                  <TableHead>No.2</TableHead>
+                  <TableHead>{custom}</TableHead>
                   <TableHead>식당명</TableHead>
                   <TableHead>이벤트 메뉴</TableHead>
                   <TableHead>참여인원</TableHead>
