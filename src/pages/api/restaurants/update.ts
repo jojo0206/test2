@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'GET') {
     try {
       const myFunction = httpsCallable(functions, 'helloWorld2');
-      const res2 = await myFunction();//({ token: 'value1', title: 'value2', body: 'value3' });
+      await myFunction();//({ token: 'value1', title: 'value2', body: 'value3' });
       res.status(200).json({ message: 'data3' });
       // const result = res2 as AxiosResponse<MyFunctionResult>;
       // const data = result.data as MyFunctionResult;
