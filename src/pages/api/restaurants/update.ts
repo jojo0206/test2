@@ -3,6 +3,10 @@ import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 import { firebaseApp } from '@/firebase/firebaseClient';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'GET') {
+    res.status(200).json({ message: 'good' });
+  }
+
   if (req.method === 'POST') {
     const { id, name, isApproval, postNumber, description, address, addressDetail, imageUrl, businessImageUrl } = req.body.data;
 

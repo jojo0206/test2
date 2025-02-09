@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { Duration, DurationType, Filter, FilterType, Menu, Store, StoreEvent } from '@/interface';
 import { ParsedUrlQuery } from 'querystring';
 import { getFunctions, httpsCallable } from 'firebase/functions';
+import axios from "axios";
 
 interface QueryParams extends ParsedUrlQuery {
   page?: string;
@@ -50,12 +51,8 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
   const handleMoveDetail = (id:string) => router.push("/"+ id)
 
   const handleFilter = (filter: (typeof FilterType)[number]) => {
-    const myFunction = httpsCallable<MyFunctionParams, MyFunctionResult>(functions, 'helloWorld2');
-    myFunction({ token: 'value1', title: 'value2', body: 'value3' }).then((result)=>{
-      setCustom('do');
-      const data = result.data as MyFunctionResult;
-      setCustom(data.message);
-      console.log(data.message);
+    axios.get('/api/restaurants/update').then((res: unknown)=>{
+      setCustom('ok');
     }).catch((error: unknown)=>{
       let errorMessage: string;
       if (error instanceof Error) {
@@ -65,9 +62,27 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
         // 알 수 없는 에러 타입
         errorMessage = `An unknown error occurred: ${String(error).replace(/\n/g, " ")}`;
       }
-
       setCustom(errorMessage);
     });
+
+    // const myFunction = httpsCallable<MyFunctionParams, MyFunctionResult>(functions, 'helloWorld2');
+    // myFunction({ token: 'value1', title: 'value2', body: 'value3' }).then((result)=>{
+    //   setCustom('do');
+    //   const data = result.data as MyFunctionResult;
+    //   setCustom(data.message);
+    //   console.log(data.message);
+    // }).catch((error: unknown)=>{
+    //   let errorMessage: string;
+    //   if (error instanceof Error) {
+    //     // 일반적인 Error 객체
+    //     errorMessage = `Error: ${error.message.replace(/\n/g, " ")}`;
+    //   } else {
+    //     // 알 수 없는 에러 타입
+    //     errorMessage = `An unknown error occurred: ${String(error).replace(/\n/g, " ")}`;
+    //   }
+    //   setCustom(errorMessage);
+    // });
+
     // setFilter(filter);
     // router.push({
     //   pathname: router.pathname,
