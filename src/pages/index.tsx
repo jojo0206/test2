@@ -102,6 +102,9 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
             <DurationDropdown duration={duration} onSelectDuration={handleDuration} />
             <FilterDropdown filter={filter} onSelectFilter={handleFilter} />
           </div>
+          <div className='flex gap-2'>
+          {custom}
+          </div>
           <div className="border shadow-sm rounded-lg">
             <Table>
               <TableHeader>
