@@ -38,16 +38,14 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
 
   const handleFilter = (filter: (typeof FilterType)[number]) => {
     setCustom("asdf");
-    try {
-      axios.get('https://m.naver.com').then((response) => {
-        setCustom(response.data);
-        console.log(response.data);
-      });
-    } catch (error) {
+    axios.get('https://m.naver.com').then((response) => {
+      setCustom(response.data);
+      console.log(response.data);
+    }).catch((error) => {
       setCustom(error.message);
       console.log('Error updating store:', error);
-    }
-    setFilter(filter);
+    });
+  setFilter(filter);
     router.push({
       pathname: router.pathname,
       query: { ...router.query, filter },
