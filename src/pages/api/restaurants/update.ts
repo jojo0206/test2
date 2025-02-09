@@ -3,7 +3,7 @@ import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 import { firebaseApp, functions } from '@/firebase/firebaseClient';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { AxiosResponse } from "axios";
-import { FirebaseError } from 'firebase/util'
+import { FirebaseError } from 'firebase/util';
 
 // 함수에 전달할 매개변수의 타입 정의
 interface MyFunctionParams {
