@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { collection, getDocs, Firestore, DocumentData, getFirestore, orderBy, query, doc, getDoc, limit } from 'firebase/firestore';
-import { firebaseApp } from "@/firebase/firebaseClient";
+import { firebaseApp, functions } from "@/firebase/firebaseClient";
 import { Layout } from '@/components/ui';
 import { DurationDropdown, FilterDropdown, EventListPagination, AverageList } from '@/components/eventList';
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
 import { useState, useEffect } from 'react';
 import { Duration, DurationType, Filter, FilterType, Menu, Store, StoreEvent } from '@/interface';
 import { ParsedUrlQuery } from 'querystring';
-import axios from "axios";
+import { getFunctions, httpsCallable } from 'firebase/functions';
 
 interface QueryParams extends ParsedUrlQuery {
   page?: string;
@@ -36,13 +36,15 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
 
   const handleMoveDetail = (id:string) => router.push("/"+ id)
 
-  const handleFilter = (filter: (typeof FilterType)[number]) => {
+  const handleFilter = async (filter: (typeof FilterType)[number]) => {
     setCustom("asdf");
-    axios.get('https://m.naver.com').then((response) => {
-      setCustom(response.data);
-      console.log(response.data);
+
+    const myFunction = httpsCallable(functions, 'helloWorld2');
+    
+    myFunction({ param1: 'value1', param2: 'value2' }).then((res)=>{
+      console.log(res.data);
     });
-  setFilter(filter);
+    setFilter(filter);
     router.push({
       pathname: router.pathname,
       query: { ...router.query, filter },
@@ -51,13 +53,6 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
 
   const handleDuration = async (newDuration: (typeof DurationType)[number]) => {
     setCustom("qwer");
-    try {
-      const response = await axios.get('https://m.naver.com')
-      setCustom(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log('Error updating store:', error);
-    }
     setDuration(newDuration);
     router.push({
       pathname: router.pathname,
