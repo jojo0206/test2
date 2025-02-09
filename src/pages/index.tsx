@@ -41,9 +41,6 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
     axios.get('https://m.naver.com').then((response) => {
       setCustom(response.data);
       console.log(response.data);
-    }).catch((error) => {
-      setCustom(error.message);
-      console.log('Error updating store:', error);
     });
   setFilter(filter);
     router.push({
