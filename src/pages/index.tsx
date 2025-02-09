@@ -8,7 +8,7 @@ import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@
 import { useState, useEffect } from 'react';
 import { Duration, DurationType, Filter, FilterType, Menu, Store, StoreEvent } from '@/interface';
 import { ParsedUrlQuery } from 'querystring';
-import { getFunctions, httpsCallable, HttpsCallableError } from 'firebase/functions';
+import { getFunctions, httpsCallable } from 'firebase/functions';
 
 interface QueryParams extends ParsedUrlQuery {
   page?: string;
@@ -58,10 +58,7 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
       console.log(data.message);
     }).catch((error: unknown)=>{
       let errorMessage: string;
-      if (error instanceof HttpsCallableError) {
-        // Firebase Functions 특정 에러
-        errorMessage = `Firebase Function Error: ${error.message}`;
-      } else if (error instanceof Error) {
+      if (error instanceof Error) {
         // 일반적인 Error 객체
         errorMessage = `Error: ${error.message}`;
       } else {
