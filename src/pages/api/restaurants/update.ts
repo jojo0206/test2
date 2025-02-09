@@ -30,10 +30,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       let errorMessage: string;
       if (error instanceof Error) {
         // 일반적인 Error 객체
-        errorMessage = `Error: ${error.message.replace(/\n/g, " ")}`;
+        errorMessage = `Error2: ${error.message.replace(/\n/g, " ")}`;
       } else {
         // 알 수 없는 에러 타입
-        errorMessage = `An unknown error occurred: ${String(error).replace(/\n/g, " ")}`;
+        errorMessage = `An2 unknown error occurred: ${String(error).replace(/\n/g, " ")}`;
       }
       res.status(200).json({ message: errorMessage });
     }
