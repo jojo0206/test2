@@ -53,7 +53,7 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
   const handleFilter = (filter: (typeof FilterType)[number]) => {
     axios.get('/api/restaurants/update').then((res: unknown)=>{
       const result = res as AxiosResponse<MyFunctionResult>;
-      setCustom(result.message);
+      setCustom(result.data.message);
     }).catch((error: unknown)=>{
       let errorMessage: string;
       if (error instanceof Error) {
