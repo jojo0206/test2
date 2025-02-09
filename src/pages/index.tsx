@@ -68,12 +68,11 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
 
       setCustom(errorMessage);
     });
-    setFilter(filter);
-
-    router.push({
-      pathname: router.pathname,
-      query: { ...router.query, filter },
-    });
+    // setFilter(filter);
+    // router.push({
+    //   pathname: router.pathname,
+    //   query: { ...router.query, filter },
+    // });
   };
 
   const handleDuration = async (newDuration: (typeof DurationType)[number]) => {
