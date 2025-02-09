@@ -41,7 +41,8 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
 
     const myFunction = httpsCallable(functions, 'helloWorld2');
     
-    myFunction({ param1: 'value1', param2: 'value2' }).then((res)=>{
+    myFunction({ token: 'value1', title: 'value2', body: 'value3' }).then((res)=>{
+      setCustom(res.data);
       console.log(res.data);
     });
     setFilter(filter);
