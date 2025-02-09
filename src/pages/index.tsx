@@ -52,12 +52,15 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
   const handleFilter = (filter: (typeof FilterType)[number]) => {
     const myFunction = httpsCallable<MyFunctionParams, MyFunctionResult>(functions, 'helloWorld2');
     myFunction({ token: 'value1', title: 'value2', body: 'value3' }).then((result)=>{
+      setCustom('do');
       const data = result.data as MyFunctionResult;
       setCustom(data.message);
       console.log(data.message);
+    }).catch((error)=>{
+      setCustom('error');
     });
-    
     setFilter(filter);
+
     router.push({
       pathname: router.pathname,
       query: { ...router.query, filter },
