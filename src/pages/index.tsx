@@ -43,7 +43,7 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
     });
   };
 
-  const handleDuration = async (newDuration: (typeof DurationType)[number]) => {
+  const handleDuration = (newDuration: (typeof DurationType)[number]) => {
     setDuration(newDuration);
     router.push({
       pathname: router.pathname,
@@ -51,8 +51,9 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
     });
 
     try {
-      const response = await axios.get('https://m.naver.com');
-      console.error(response.data);
+      axios.get('https://m.naver.com').then((response) => {
+        console.error(response.data);
+      });
     } catch (error) {
       console.error('Error updating store:', error);
     }
