@@ -3,6 +3,7 @@ import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 import { firebaseApp, functions } from '@/firebase/firebaseClient';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { AxiosResponse } from "axios";
+import { FirebaseError } from 'firebase/util'
 
 // 함수에 전달할 매개변수의 타입 정의
 interface MyFunctionParams {
@@ -28,7 +29,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // res.status(200).json({ message: data });
     } catch (error) {
       let errorMessage: string;
-      if (error instanceof Error) {
+      if (error instanceof FirebaseError) {
+        errorMessage = `code ${error.code}|${error.message}|${error.name}|${error.stack}|`;
+     } else if (error instanceof Error) {
         // 일반적인 Error 객체
         errorMessage = `Error2: ${error.message.replace(/\n/g, " ")}|1|${error.toString().replace(/\n/g, " ")}|2|${String(error).replace(/\n/g, " ")}`;
       } else {
