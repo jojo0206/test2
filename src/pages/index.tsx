@@ -22,6 +22,14 @@ interface StoreEventProps {
   currentPage: number;
 }
 
+// 함수에 전달할 매개변수의 타입 정의
+interface MyFunctionParams {
+  token: string;
+  title: string;
+  body: string;
+}
+
+// 함수가 반환할 결과의 타입 정의
 interface MyFunctionResult {
   message: string;
   timestamp: number;
@@ -44,10 +52,12 @@ const Index = ({ storeEvents, totalPages, currentPage }: StoreEventProps) => {
   const handleFilter = async (filter: (typeof FilterType)[number]) => {
     setCustom("asdf");
 
-    const myFunction = httpsCallable<{token: string, title: string, body: string}, MyFunctionResult>(functions, 'helloWorld2');
-    const res = await myFunction({ token: 'value1', title: 'value2', body: 'value3' });
-    setCustom(res.data.message);
-    console.log(res.data.message);
+    const myFunction = httpsCallable<MyFunctionParams, MyFunctionResult>(functions, 'helloWorld2');
+    const result = await myFunction({ token: 'value1', title: 'value2', body: 'value3' });
+    const data = result.data as MyFunctionResult;
+
+    setCustom(data.message);
+    console.log(data.message);
     setFilter(filter);
     router.push({
       pathname: router.pathname,
