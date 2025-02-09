@@ -3,6 +3,7 @@ import { getFirestore, doc, updateDoc } from 'firebase/firestore';
 import { firebaseApp, functions } from '@/firebase/firebaseClient';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { AxiosResponse } from "axios";
+import { HttpsError } from "firebase-functions/v2/https";
 
 // 함수에 전달할 매개변수의 타입 정의
 interface MyFunctionParams {
@@ -21,16 +22,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'GET') {
     try {
       const myFunction = httpsCallable(functions, 'helloWorld2');
-      await myFunction();//({ token: 'value1', title: 'value2', body: 'value3' });
+      await myFunction({ token: 'value1', title: 'value2', body: 'value3' });//({ token: 'value1', title: 'value2', body: 'value3' });
       res.status(200).json({ message: 'data3' });
       // const result = res2 as AxiosResponse<MyFunctionResult>;
       // const data = result.data as MyFunctionResult;
       // res.status(200).json({ message: data });
     } catch (error) {
       let errorMessage: string;
-      if (error instanceof Error) {
+      if (error instanceof HttpsError) {
+        errorMessage = `code ${error.code}`;
+      } else if (error instanceof Error) {
         // 일반적인 Error 객체
-        errorMessage = `Error2: ${error.message.replace(/\n/g, " ")}`;
+        errorMessage = `Error2: ${error.message.replace(/\n/g, " ")} ${error.code} ${error.message.replace(/\n/g, " ")}`;
       } else {
         // 알 수 없는 에러 타입
         errorMessage = `An2 unknown error occurred: ${String(error).replace(/\n/g, " ")}`;
