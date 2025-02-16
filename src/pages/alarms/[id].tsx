@@ -21,10 +21,10 @@ const MyDropdown = () => (
         <DropdownMenu.Item className="bg-white">
           항목 1
         </DropdownMenu.Item>
-        <DropdownMenu.Item>
+        <DropdownMenu.Item className="bg-white">
           항목 2
         </DropdownMenu.Item>
-        <DropdownMenu.Item>
+        <DropdownMenu.Item className="bg-white">
           항목 3
         </DropdownMenu.Item>
       </DropdownMenu.Content>
