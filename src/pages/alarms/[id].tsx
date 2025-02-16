@@ -10,13 +10,13 @@ import axios from 'axios';
 import { Alarm } from '@/interface';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
-const menuItems = Array.from({ length: 60 }, (_, index) => index);
+const hourItems = Array.from({ length: 24 }, (_, index) => index + 1);
 
-interface MyDropdownProps {
+interface HourDropdownProps {
   title: string
 }
 
-const MyDropdown = ({title}: MyDropdownProps) => (
+const HourDropdown = ({title}: HourDropdownProps) => (
   <DropdownMenu.Root>
     <DropdownMenu.Trigger asChild>
       <button>{title}</button>
@@ -30,6 +30,39 @@ const MyDropdown = ({title}: MyDropdownProps) => (
       }}
       >
         {menuItems.map((item) => (
+          <DropdownMenu.Item 
+            key={item}
+            style={{ height: '50px', width: '100px' }}
+            className="flex items-center px-4 bg-white"          
+          >
+            {item.toString().padStart(2, '0')}
+          </DropdownMenu.Item>
+        ))}
+      </DropdownMenu.Content>
+    </DropdownMenu.Portal>
+  </DropdownMenu.Root>
+);
+
+const minItems = Array.from({ length: 60 }, (_, index) => index);
+
+interface MinDropdownProps {
+  title: string
+}
+
+const MinDropdown = ({title}: MinDropdownProps) => (
+  <DropdownMenu.Root>
+    <DropdownMenu.Trigger asChild>
+      <button>{title}</button>
+    </DropdownMenu.Trigger>
+
+    <DropdownMenu.Portal>
+      <DropdownMenu.Content
+      style={{
+        maxHeight: '325px',
+        overflowY: 'auto'
+      }}
+      >
+        {minItems.map((item) => (
           <DropdownMenu.Item 
             key={item}
             style={{ height: '50px', width: '100px' }}
@@ -239,11 +272,15 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
         </div>
         <div className=''>
           <label htmlFor="time" className="block text-gray-700 font-medium mb-1">
-                시간 선택
-              </label>
-
-              <MyDropdown title="시간 선택"/>
-
+              시 선택
+          </label>
+          <HourDropdown title="시 선택"/>
+        </div>
+        <div className=''>
+          <label htmlFor="time" className="block text-gray-700 font-medium mb-1">
+              분 선택
+          </label>
+          <MinDropdown title="분 선택"/>
         </div>
         <div className=''>
           <label htmlFor="weekdays" className="block text-gray-700 font-medium mb-1">
