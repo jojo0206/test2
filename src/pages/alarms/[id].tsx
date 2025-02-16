@@ -18,13 +18,12 @@ const MyDropdown = () => (
 
     <DropdownMenu.Portal>
       <DropdownMenu.Content>
-        <DropdownMenu.Item>
+        <DropdownMenu.Item className="background-color: white">
           항목 1
         </DropdownMenu.Item>
         <DropdownMenu.Item>
           항목 2
         </DropdownMenu.Item>
-        <DropdownMenu.Separator />
         <DropdownMenu.Item>
           항목 3
         </DropdownMenu.Item>
