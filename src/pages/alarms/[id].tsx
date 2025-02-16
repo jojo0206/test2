@@ -207,14 +207,14 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
             id="isMon"
             checked={isMon()}
             onChange={handleIsMonChange}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="flex w-50 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
           <Input
             type="checkbox"
             id="isTue"
             checked={isTue()}
             onChange={handleIsTueChange}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="flex w-50 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
         <div className="flex justify-end gap-4">
