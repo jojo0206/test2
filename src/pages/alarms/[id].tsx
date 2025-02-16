@@ -8,6 +8,30 @@ import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { Alarm } from '@/interface';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+
+const MyDropdown = () => (
+  <DropdownMenu.Root>
+    <DropdownMenu.Trigger asChild>
+      <button>메뉴 열기</button>
+    </DropdownMenu.Trigger>
+
+    <DropdownMenu.Portal>
+      <DropdownMenu.Content>
+        <DropdownMenu.Item>
+          항목 1
+        </DropdownMenu.Item>
+        <DropdownMenu.Item>
+          항목 2
+        </DropdownMenu.Item>
+        <DropdownMenu.Separator />
+        <DropdownMenu.Item>
+          항목 3
+        </DropdownMenu.Item>
+      </DropdownMenu.Content>
+    </DropdownMenu.Portal>
+  </DropdownMenu.Root>
+);
 
 interface AlarmProps {
   alarm: Alarm
@@ -202,6 +226,14 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
             onChange={handleRepeatChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
+        </div>
+        <div className=''>
+          <label htmlFor="time" className="block text-gray-700 font-medium mb-1">
+                시간 선택
+              </label>
+
+              <MyDropdown />
+              
         </div>
         <div className=''>
           <label htmlFor="weekdays" className="block text-gray-700 font-medium mb-1">
