@@ -19,7 +19,7 @@ interface HourDropdownProps {
 const HourDropdown = ({title}: HourDropdownProps) => (
   <DropdownMenu.Root>
     <DropdownMenu.Trigger asChild>
-      <button>{title}</button>
+      <button>{title} 시</button>
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Portal>
@@ -52,7 +52,7 @@ interface MinDropdownProps {
 const MinDropdown = ({title}: MinDropdownProps) => (
   <DropdownMenu.Root>
     <DropdownMenu.Trigger asChild>
-      <button>{title}</button>
+      <button>{title} 분</button>
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Portal>
@@ -274,13 +274,13 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
           <label htmlFor="time" className="block text-gray-700 font-medium mb-1">
               시 선택
           </label>
-          <HourDropdown title="시 선택"/>
+          <HourDropdown title={hour}/>
         </div>
         <div className=''>
           <label htmlFor="time" className="block text-gray-700 font-medium mb-1">
               분 선택
           </label>
-          <MinDropdown title="분 선택"/>
+          <MinDropdown title={minute}/>
         </div>
         <div className=''>
           <label htmlFor="weekdays" className="block text-gray-700 font-medium mb-1">
