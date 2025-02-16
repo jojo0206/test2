@@ -29,7 +29,7 @@ const HourDropdown = ({title}: HourDropdownProps) => (
         overflowY: 'auto'
       }}
       >
-        {menuItems.map((item) => (
+        {hourItems.map((item) => (
           <DropdownMenu.Item 
             key={item}
             style={{ height: '50px', width: '100px' }}
