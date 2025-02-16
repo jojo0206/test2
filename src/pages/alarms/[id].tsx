@@ -25,6 +25,96 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
   const [name, setName] = useState<string>(alarm.name || "")
   const [content, setContent] = useState<string>(alarm.contents || "")
 
+  const isSun = () => {
+    return weekDays >= 64;
+  }
+  const isSat = () => {
+    return (isSun() ? weekDays - 64 : weekDays) >= 32;
+  }
+  const isFri = () => {
+    var weekDays16 = weekDays;
+    if (isSun()) {
+      weekDays16 -=  64;
+    }
+    if (isSat()) {
+      weekDays16 -=  32;
+    }
+    return weekDays16 >= 16;
+  }
+  const isThu = () => {
+    var weekDaysVal = weekDays;
+    if (isSun()) {
+      weekDaysVal -=  64;
+    }
+    if (isSat()) {
+      weekDaysVal -=  32;
+    }
+    if (isFri()) {
+      weekDaysVal -=  16;
+    }
+    return weekDaysVal >= 8;
+  }
+  const isWed = () => {
+    var weekDaysVal = weekDays;
+    if (isSun()) {
+      weekDaysVal -=  64;
+    }
+    if (isSat()) {
+      weekDaysVal -=  32;
+    }
+    if (isFri()) {
+      weekDaysVal -=  16;
+    }
+    if (isThu()) {
+      weekDaysVal -=  8;
+    }
+    return weekDaysVal >= 4;
+  }
+  const isTue = () => {
+    var weekDaysVal = weekDays;
+    if (isSun()) {
+      weekDaysVal -=  64;
+    }
+    if (isSat()) {
+      weekDaysVal -=  32;
+    }
+    if (isFri()) {
+      weekDaysVal -=  16;
+    }
+    if (isThu()) {
+      weekDaysVal -=  8;
+    }
+    if (isWed()) {
+      weekDaysVal -=  4;
+    }
+    return weekDaysVal >= 2;
+  }
+  const isMon = () => {
+    var weekDaysVal = weekDays;
+    if (isSun()) {
+      weekDaysVal -=  64;
+    }
+    if (isSat()) {
+      weekDaysVal -=  32;
+    }
+    if (isFri()) {
+      weekDaysVal -=  16;
+    }
+    if (isThu()) {
+      weekDaysVal -=  8;
+    }
+    if (isWed()) {
+      weekDaysVal -=  4;
+    }
+    if (isTue()) {
+      weekDaysVal -=  2;
+    }
+    return weekDaysVal >= 1;
+  }
+
+  const handleIsMonChange = () => setWeekDays(weekDays + (isMon() ? 1 : -1));
+  const handleIsTueChange = () => setWeekDays(weekDays + (isTue() ? 2 : -2));
+
   const handleRepeatChange = () => setRepeat(!repeat);
 
   const handleContent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -107,7 +197,25 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
             onChange={handleRepeatChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
-
+        </div>
+        <div className=''>
+          <label htmlFor="weekdays" className="block text-gray-700 font-medium mb-1">
+                요일 선택
+              </label>
+          <Input
+            type="checkbox"
+            id="isMon"
+            checked={isMon}
+            onChange={handleIsMonChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+          <Input
+            type="checkbox"
+            id="isTue"
+            checked={isTue}
+            onChange={handleIsTueChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
         </div>
         <div className="flex justify-end gap-4">
           <button
