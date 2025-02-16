@@ -233,32 +233,39 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
               </label>
 
               <MyDropdown />
-              
+
         </div>
         <div className=''>
           <label htmlFor="weekdays" className="block text-gray-700 font-medium mb-1">
             요일 선택
           </label>
-          <label htmlFor="isMon" className="block text-gray-700 font-regular mb-1">
-            월요일
-          </label>
-          <Input
-            type="checkbox"
-            id="isMon"
-            checked={isMon()}
-            onChange={handleIsMonChange}
-            className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
-          <label htmlFor="isTue" className="block text-gray-700 font-regular mb-1">
-            화요일
-          </label>
-          <Input
-            type="checkbox"
-            id="isTue"
-            checked={isTue()}
-            onChange={handleIsTueChange}
-            className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
+          <div className='flex w-full space-x-4'>
+            <div className="w-auto">
+              <label htmlFor="isMon" className="block text-gray-700 font-regular mb-1">
+                월요일
+              </label>
+              <Input
+                type="checkbox"
+                id="isMon"
+                checked={isMon()}
+                onChange={handleIsMonChange}
+                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div className="w-auto">
+              <label htmlFor="isTue" className="block text-gray-700 font-regular mb-1">
+                화요일
+              </label>
+              <Input
+                type="checkbox"
+                id="isTue"
+                checked={isTue()}
+                onChange={handleIsTueChange}
+                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+          </div>
+
           <label htmlFor="isWed" className="block text-gray-700 font-regular mb-1">
             수요일
           </label>
