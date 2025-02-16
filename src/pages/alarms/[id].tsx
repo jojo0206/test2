@@ -264,58 +264,68 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
                 className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
-          </div>
 
-          <label htmlFor="isWed" className="block text-gray-700 font-regular mb-1">
-            수요일
-          </label>
-          <Input
-            type="checkbox"
-            id="isWed"
-            checked={isWed()}
-            onChange={handleIsWedChange}
-            className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
-          <label htmlFor="isThu" className="block text-gray-700 font-regular mb-1">
-            목요일
-          </label>
-          <Input
-            type="checkbox"
-            id="isThu"
-            checked={isThu()}
-            onChange={handleIsThuChange}
-            className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
-          <label htmlFor="isFri" className="block text-gray-700 font-regular mb-1">
-            금요일
-          </label>
-          <Input
-            type="checkbox"
-            id="isFri"
-            checked={isFri()}
-            onChange={handleIsFriChange}
-            className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
-          <label htmlFor="isSat" className="block text-gray-700 font-regular mb-1">
-            토요일
-          </label>
-          <Input
-            type="checkbox"
-            id="isSat"
-            checked={isSat()}
-            onChange={handleIsSatChange}
-            className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
-          <label htmlFor="isSun" className="block text-gray-700 font-regular mb-1">
-            일요일
-          </label>
-          <Input
-            type="checkbox"
-            id="isSun"
-            checked={isSun()}
-            onChange={handleIsSunChange}
-            className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
+            <div className="w-auto">
+              <label htmlFor="isWed" className="block text-gray-700 font-regular mb-1">
+              수요일
+              </label>
+              <Input
+                type="checkbox"
+                id="isWed"
+                checked={isWed()}
+                onChange={handleIsWedChange}
+                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div className="w-auto">
+              <label htmlFor="isThu" className="block text-gray-700 font-regular mb-1">
+              목요일
+              </label>
+              <Input
+                type="checkbox"
+                id="isThu"
+                checked={isThu()}
+                onChange={handleIsThuChange}
+                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div className="w-auto">
+              <label htmlFor="isFri" className="block text-gray-700 font-regular mb-1">
+              금요일
+              </label>
+              <Input
+                type="checkbox"
+                id="isFri"
+                checked={isFri()}
+                onChange={handleIsFriChange}
+                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div className="w-auto">
+              <label htmlFor="isSat" className="block text-gray-700 font-regular mb-1">
+              토요일
+              </label>
+              <Input
+                type="checkbox"
+                id="isSat"
+                checked={isSat()}
+                onChange={handleIsSatChange}
+                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div className="w-auto">
+              <label htmlFor="isSun" className="block text-gray-700 font-regular mb-1">
+              일요일
+              </label>
+              <Input
+                type="checkbox"
+                id="isSun"
+                checked={isSun()}
+                onChange={handleIsSunChange}
+                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+          </div>
         </div>
 
         <div className="flex justify-end gap-4">
