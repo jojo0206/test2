@@ -251,6 +251,15 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    let imageUrl = alarm.imageUrl;
+
+    if (selectedFile) {
+      const storageRef = ref(storage, `/store/image/${selectedFile}`);
+      const snapshot = await uploadBytes(storageRef, selectedFile);
+      imageUrl = await getDownloadURL(snapshot.ref);
+    }
+
     try {
       // const { id,name,sendType,sendUserIdList,contents, repeat, weekDays, hour, minute, imageUrl } = req.body.data;
       const response = await axios.post('/api/alarms/update', {
@@ -258,7 +267,7 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
           id: alarm.id,
           contents: content,
           sendUserIdList: sendUserIdList,
-          imageUrl: imageURL,
+          imageUrl: imageUrl,
           hour: hour,
           minute: minute,
           weekDays: weekDays,
