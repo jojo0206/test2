@@ -23,7 +23,12 @@ const MyDropdown = ({title}: MyDropdownProps) => (
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Portal>
-      <DropdownMenu.Content>
+      <DropdownMenu.Content
+      style={{
+        maxHeight: '200px',
+        overflowY: 'auto'
+      }}
+      >
         {menuItems.map((item) => (
           <DropdownMenu.Item className="bg-white" key={item}>
             {item.toString().padStart(2, '0')}
