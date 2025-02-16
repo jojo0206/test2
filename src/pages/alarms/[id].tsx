@@ -223,8 +223,8 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
             className="flex w-200 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
-  <div className="h-25 d-inline-block" style="width: 120px; background-color: rgba(0,0,255,.1)">Height 25%</div>
-  <div className="h-50 d-inline-block" style="width: 120px; background-color: rgba(0,0,255,.1)">Height 50%</div>
+  <div className="h-25 d-inline-block">Height 25%</div>
+  <div className="h-50 d-inline-block">Height 50%</div>
 
         <div className="flex justify-end gap-4">
           <button
