@@ -201,20 +201,20 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
         <div className=''>
           <label htmlFor="weekdays" className="block text-gray-700 font-medium mb-1">
                 요일 선택
-              </label>
+          </label>
           <Input
             type="checkbox"
             id="isMon"
             checked={isMon()}
             onChange={handleIsMonChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
           <Input
             type="checkbox"
             id="isTue"
             checked={isTue()}
             onChange={handleIsTueChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
         <div className="flex justify-end gap-4">
