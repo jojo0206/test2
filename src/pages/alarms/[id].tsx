@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { Alarm } from '@/interface';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { UploadIcon } from '../../components/icon/UploadIcon';
 
 const hourItems = Array.from({ length: 24 }, (_, index) => index + 1);
 
