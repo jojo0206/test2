@@ -242,6 +242,8 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
 
   const handleRepeatChange = () => setRepeat(!repeat);
 
+  const handleNameChange = ({target: { value }}: React.ChangeEvent<HTMLInputElement>) => setName(value);
+
   const handleContent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(event.target.value)
   }
@@ -313,6 +315,7 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
             id="name"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             value={alarm.name}
+            onChange={handleNameChange}
           />
         </div>
 
