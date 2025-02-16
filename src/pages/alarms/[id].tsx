@@ -7,20 +7,23 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import { Review } from '@/interface';
+import { Alarm } from '@/interface';
 
-interface ReviewProps {
-  review: Review
+interface AlarmProps {
+  alarm: Alarm
 }
 
-const ReviewDetailPage = ({review}: ReviewProps) => {
+const AlarmDetailPage = ({alarm}: AlarmProps) => {
   const router = useRouter()
 
-  const [cleanRate, setCleanRate] = useState<number | null>(review.cleanRate);
-  const [kindRate, setKindRate] = useState<number | null>(review.kindRate);
-  const [moodRate, setMoodRate] = useState<number | null>(review.moodRate);
-  const [tasteRate, setTasteRate] = useState<number | null>(review.tasteRate);
-  const [content, setContent] = useState<string>(review.contents || "")
+  const [hour, setHour] = useState<number | null>(alarm.hour);
+  const [minute, setMinute] = useState<number | null>(alarm.minute);
+  const [weekDays, setWeekDays] = useState<number>(alarm.weekDays || 1);
+
+  const [repeat, setRepeat] = useState<boolean>(alarm.repeat || false);
+  const [sendType, setSendType] = useState<number>(alarm.sendType || 1);
+  const [name, setName] = useState<string>(alarm.name || "")
+  const [content, setContent] = useState<string>(alarm.contents || "")
 
   const handleContent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(event.target.value)
@@ -29,54 +32,55 @@ const ReviewDetailPage = ({review}: ReviewProps) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await axios.post('/api/reviews/update', {
+      const response = await axios.post('/api/alarms/update', {
         data: {
-          id: review.id,
+          id: alarm.id,
           contents: content,
-          cleanRate: cleanRate,
-          kindRate: kindRate,
-          moodRate: moodRate,
-          tasteRate: tasteRate
+          hour: hour,
+          minute: minute,
+          weekDays: weekDays,
+          sendType: sendType,
+          name: name,
+          repeat: repeat
         }
       });
       if(response.status === 200){
         router.back();
       }
     } catch (error) {
-      console.error('Error Update Review:', error);
+      console.error('Error Update Alarm:', error);
     }
   }
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete('/api/reviews/delete', {
+      const response = await axios.delete('/api/alarms/delete', {
         data: {
-          id: review.id
+          id: alarm.id
         }
       })
       if(response.status === 200){
         router.back();
       }
     } catch (error) {
-      console.error('Error Delete Review:', error);
+      console.error('Error Delete Alarm:', error);
     }
   };
 
   return (
     <div>
-      <DetailPageHeader title='리뷰'/>
+      <DetailPageHeader title='알람'/>
       <div className="bg-white p-6 w-full">
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="user" className="block text-gray-700 font-medium mb-1">
-            작성자
+          <label htmlFor="title" className="block text-gray-700 font-medium mb-1">
+            이름
           </label>
           <Input
             type="text"
-            id="user"
+            id="name"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            value={review.userId}
-            readOnly
+            value={alarm.name}
           />
         </div>
         <div>
@@ -90,61 +94,7 @@ const ReviewDetailPage = ({review}: ReviewProps) => {
             onChange={handleContent}
           />
         </div>
-        <div>
-          <label htmlFor="body" className="block text-gray-700 font-medium mb-1">
-            상점 바로가기
-          </label>
-          <Input
-            id="body"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            value={review.storeId}
-            readOnly
-          />
-        </div>
-        <div>
-          <label htmlFor="body" className="block text-gray-700 font-medium mb-1">
-            이벤트 바로가기
-          </label>
-          <Textarea
-            id="body"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            value={review.eventId}
-            readOnly
-          />
-        </div>
         <div className=''>
-        <Typography component="legend">Clean Rate</Typography>
-        <Rating
-          name="simple-controlled"
-          value={cleanRate}
-          onChange={(event, newValue) => {
-            setCleanRate(newValue);
-          }}
-        />
-        <Typography component="legend">Kind Rate</Typography>
-        <Rating
-          name="simple-controlled"
-          value={kindRate}
-          onChange={(event, newValue) => {
-            setKindRate(newValue);
-          }}
-        />
-        <Typography component="legend">Mood Rate</Typography>
-        <Rating
-          name="simple-controlled"
-          value={moodRate}
-          onChange={(event, newValue) => {
-            setMoodRate(newValue);
-          }}
-        />
-        <Typography component="legend">Taste Rate</Typography>
-        <Rating
-          name="simple-controlled"
-          value={tasteRate}
-          onChange={(event, newValue) => {
-            setTasteRate(newValue);
-          }}
-        />
         </div>
         <div className="flex justify-end gap-4">
           <button
@@ -169,11 +119,11 @@ const ReviewDetailPage = ({review}: ReviewProps) => {
 
 export const getServerSideProps: GetServerSideProps = async (context:GetServerSidePropsContext) => {
   const { params } = context;
-  const reviewId = params?.id as string; // 고유 ID 사용
+  const alarmId = params?.id as string; // 고유 ID 사용
 
   try {
       const db: Firestore = getFirestore(firebaseApp!);
-      const docRef = doc(db, 'reviews', reviewId); // 고유 ID를 사용하여 문서 참조
+      const docRef = doc(db, 'alarms', alarmId); // 고유 ID를 사용하여 문서 참조
       const docSnapshot = await getDoc(docRef);
 
       if (!docSnapshot.exists()) {
@@ -182,7 +132,7 @@ export const getServerSideProps: GetServerSideProps = async (context:GetServerSi
         };
       }
 
-      const review: DocumentData = {
+      const alarm: DocumentData = {
           ...docSnapshot.data(),
           id: docSnapshot.id,
           createDt: docSnapshot.data().createDt ? docSnapshot.data().createDt.toDate().toISOString() : null,
@@ -190,7 +140,7 @@ export const getServerSideProps: GetServerSideProps = async (context:GetServerSi
 
       return {
           props: {
-              review: review,
+              alarm: alarm,
           },
       };
 
@@ -198,11 +148,11 @@ export const getServerSideProps: GetServerSideProps = async (context:GetServerSi
       console.error("Error fetching data: ", error);
       return {
           props: {
-            review: null,
+            alarm: null,
           },
       };
   }
 };
 
 
-export default ReviewDetailPage;
+export default AlarmDetailPage;

@@ -89,7 +89,7 @@ export interface Alarm {
 
   weekDays: number;
   hour: number;
-  min: number;
+  minute: number;
 
   createDt: string;
 }
