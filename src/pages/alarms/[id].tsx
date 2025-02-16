@@ -12,7 +12,11 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 const menuItems = Array.from({ length: 60 }, (_, index) => index);
 
-const MyDropdown = ({title}) => (
+interface MyDropdownProps {
+  title: string
+}
+
+const MyDropdown = ({title}: MyDropdownProps) => (
   <DropdownMenu.Root>
     <DropdownMenu.Trigger asChild>
       <button>{title}</button>
