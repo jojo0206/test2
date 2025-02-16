@@ -78,6 +78,22 @@ export interface Review {
   createDt: string | Date;
 }
 
+export interface Alarm {
+  id: string;
+  name: string;
+  sendType: number;//1 전체, 2 식당, 3 특정 
+  sendUserIdList: string;
+  contents: string;
+
+  repeat: boolean;
+
+  weekDays: number;
+  hour: number;
+  min: number;
+
+  createDt: string;
+}
+
 export interface User {
   id: string;
   password: string;

@@ -44,6 +44,7 @@ export const SideBar = () => {
                         <NavLink href="/restaurants" icon={<RestaurantIcon className="h-4 w-4" />} text="식당 정보" />
                         <NavLink href="/approvals" icon={<ApprovalIcon className="h-4 w-4" />} text="식당 승인" />
                         <NavLink href="/reviews" icon={<ReviewIcon className="h-4 w-4" />} text="리뷰 관리" />
+                        <NavLink href="/alarms" icon={<ReviewIcon className="h-4 w-4" />} text="알림 보내기" />
                     </nav>
                 </div>
             </div>
