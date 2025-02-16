@@ -10,6 +10,8 @@ import axios from 'axios';
 import { Alarm } from '@/interface';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
+const menuItems = Array.from({ length: 60 }, (_, index) => index);
+
 const MyDropdown = () => (
   <DropdownMenu.Root>
     <DropdownMenu.Trigger asChild>
@@ -18,15 +20,11 @@ const MyDropdown = () => (
 
     <DropdownMenu.Portal>
       <DropdownMenu.Content>
-        <DropdownMenu.Item className="bg-white">
-          항목 1
-        </DropdownMenu.Item>
-        <DropdownMenu.Item className="bg-white">
-          항목 2
-        </DropdownMenu.Item>
-        <DropdownMenu.Item className="bg-white">
-          항목 3
-        </DropdownMenu.Item>
+        {menuItems.map((item) => (
+          <DropdownMenu.Item className="bg-white" key={item}>
+            {item.toString().padStart(2, '0')}
+          </DropdownMenu.Item>
+        ))}
       </DropdownMenu.Content>
     </DropdownMenu.Portal>
   </DropdownMenu.Root>
