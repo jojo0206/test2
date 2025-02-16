@@ -45,7 +45,7 @@ const HourDropdown = ({title}: HourDropdownProps) => (
   </DropdownMenu.Root>
 );
 
-const minItems = Array.from({ length: 60 }, (_, index) => index);
+const minItems = Array.from({ length: 12 }, (_, index) => index * 5);
 
 interface MinDropdownProps {
   title: number
