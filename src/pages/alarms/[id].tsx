@@ -31,7 +31,7 @@ const MyDropdown = ({title}: MyDropdownProps) => (
       >
         {menuItems.map((item) => (
           <DropdownMenu.Item className="bg-white" key={item}>
-            {item.toString().padStart(2, '0')}
+            _      {item.toString().padStart(2, '0')}        _
           </DropdownMenu.Item>
         ))}
       </DropdownMenu.Content>
