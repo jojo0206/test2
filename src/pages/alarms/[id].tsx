@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { Input, Textarea, DetailPageHeader } from "@/components/ui"
 import { firebaseApp } from "@/firebase/firebaseClient";
@@ -82,6 +82,7 @@ interface AlarmProps {
   
 const AlarmDetailPage = ({alarm}: AlarmProps) => {
   const router = useRouter()
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [hour, setHour] = useState<number | null>(alarm.hour);
   const [minute, setMinute] = useState<number | null>(alarm.minute);
@@ -91,6 +92,9 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
   const [sendType, setSendType] = useState<number>(alarm.sendType || 1);
   const [name, setName] = useState<string>(alarm.name || "")
   const [content, setContent] = useState<string>(alarm.contents || "")
+
+  const [imageURL, setImageURL] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const isSun = () => {
     return weekDays >= 64;
@@ -179,6 +183,22 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
     return weekDaysVal >= 1;
   }
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      handleFileSelect(file, "store");
+    }
+  };
+  const handleFileSelect = (file: File, type:string) => {
+    setSelectedFile(file);
+  };
+  const handleIconClick = (type:string) => {
+    fileInputRef.current?.click();
+  };
+  const handleFileCancel = (type: string) => {
+    setSelectedFile(null);
+  };
+
   const handleIsMonChange = () => setWeekDays(weekDays + (isMon() ? -1 : 1));
   const handleIsTueChange = () => setWeekDays(weekDays + (isTue() ? -2 : 2));
   const handleIsWedChange = () => setWeekDays(weekDays + (isWed() ? -4 : 4));
@@ -258,6 +278,61 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
             onChange={handleContent}
           />
         </div>
+
+
+        <div>
+            <label htmlFor="imageUrl" className="block text-gray-700 font-medium mb-1">
+              이미지 URL
+            </label>
+            {imageURL && 
+              <div className='flex justify-center items-center flex-col'>
+                <img src={imageURL} alt={`${store.name} Image`} width={"360px"} height={"360px"} />
+                <button onClick={() => setImageURL("")} className="mt-4 bg-red-500 text-white px-4 py-2 rounded">
+                  파일 선택
+                </button>
+              </div>
+            }
+            {!imageURL && !selectedFile &&
+              <div 
+                onClick={() => handleIconClick("store")}
+                className='bg-slate-200 w-100 h-100 flex justify-center items-center flex-col py-4 cursor-pointer'
+              >
+                <UploadIcon className="w-12 h-12 text-gray-400 dark:text-gray-500" />
+                <p className="text-gray-500 dark:text-gray-400">
+                  <span className="font-medium text-gray-900 dark:text-gray-100">
+                    파일을 선택하세요.
+                  </span>
+                </p>
+              </div>
+            }
+            {!imageURL && selectedFile && 
+              <div className="flex flex-col items-center justify-center text-center mt-4">
+                <p className="text-gray-600 dark:text-gray-400">선택된 파일 : {selectedFile.name}</p>
+                {selectedFile.type.startsWith('image/') && (
+                  <img
+                    src={URL.createObjectURL(selectedFile)}
+                    alt="Preview"
+                    className="mt-4 max-h-48"
+                    width={"360px"}
+                    height={"360px"}
+                  />
+                )}
+                <button onClick={() => handleFileCancel("store")} className="mt-4 bg-red-500 text-white px-4 py-2 rounded">
+                  파일 취소
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              className="hidden"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+            />
+          </div>
+
+
+
+
         <div className=''>
           <label htmlFor="repeat" className="block text-gray-700 font-medium mb-1">
                 반복 여부
