@@ -12,7 +12,7 @@ import { Alarm } from '@/interface';
 interface AlarmProps {
   alarm: Alarm
 }
-
+  
 const AlarmDetailPage = ({alarm}: AlarmProps) => {
   const router = useRouter()
 
@@ -24,6 +24,8 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
   const [sendType, setSendType] = useState<number>(alarm.sendType || 1);
   const [name, setName] = useState<string>(alarm.name || "")
   const [content, setContent] = useState<string>(alarm.contents || "")
+
+  const handleRepeatChange = () => setRepeat(!repeat);
 
   const handleContent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(event.target.value)
@@ -95,6 +97,17 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
           />
         </div>
         <div className=''>
+          <label htmlFor="repeat" className="block text-gray-700 font-medium mb-1">
+                반복 여부
+              </label>
+          <Input
+            type="checkbox"
+            id="repeat"
+            checked={repeat}
+            onChange={handleRepeatChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+
         </div>
         <div className="flex justify-end gap-4">
           <button
