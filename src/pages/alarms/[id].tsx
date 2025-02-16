@@ -582,36 +582,64 @@ export const getServerSideProps: GetServerSideProps = async (context:GetServerSi
   const { params } = context;
   const alarmId = params?.id as string; // 고유 ID 사용
 
-  try {
-      const db: Firestore = getFirestore(firebaseApp!);
-      const docRef = doc(db, 'alarms', alarmId); // 고유 ID를 사용하여 문서 참조
-      const docSnapshot = await getDoc(docRef);
-
-      if (!docSnapshot.exists()) {
+  // export interface Alarm {
+  //   id: string;
+  //   name: string;
+  //   sendType: number;//1 전체, 2 식당, 3 특정 
+  //   sendUserIdList: string;
+  //   contents: string;
+  
+  //   repeat: boolean;
+  
+  //   weekDays: number;
+  //   hour: number;
+  //   minute: number;
+  
+  //   imageUrl: string;
+  
+  //   createDt: string;
+  // }
+  
+  if (alarmId == 'new') {
         return {
-          notFound: true,
+            props: {
+                alarm: {
+
+                },
+            },
         };
-      }
+  } else {
+    try {
+        const db: Firestore = getFirestore(firebaseApp!);
+        const docRef = doc(db, 'alarms', alarmId); // 고유 ID를 사용하여 문서 참조
+        const docSnapshot = await getDoc(docRef);
 
-      const alarm: DocumentData = {
-          ...docSnapshot.data(),
-          id: docSnapshot.id,
-          createDt: docSnapshot.data().createDt ? docSnapshot.data().createDt.toDate().toISOString() : null,
-      };
+        if (!docSnapshot.exists()) {
+          return {
+            notFound: true,
+          };
+        }
 
-      return {
-          props: {
-              alarm: alarm,
-          },
-      };
+        const alarm: DocumentData = {
+            ...docSnapshot.data(),
+            id: docSnapshot.id,
+            createDt: docSnapshot.data().createDt ? docSnapshot.data().createDt.toDate().toISOString() : null,
+        };
 
-  } catch (error) {
-      console.error("Error fetching data: ", error);
-      return {
-          props: {
-            alarm: null,
-          },
-      };
+        return {
+            props: {
+                alarm: alarm,
+            },
+        };
+
+    } catch (error) {
+        console.error("Error fetching data: ", error);
+        return {
+            props: {
+              alarm: null,
+            },
+        };
+    }
   }
 };
 
