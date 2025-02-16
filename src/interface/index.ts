@@ -91,6 +91,8 @@ export interface Alarm {
   hour: number;
   minute: number;
 
+  imageUrl: string;
+
   createDt: string;
 }
 

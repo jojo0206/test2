@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Input, Textarea, DetailPageHeader } from "@/components/ui"
 import { firebaseApp } from "@/firebase/firebaseClient";
 import { Firestore, DocumentData,getFirestore, doc, getDoc } from 'firebase/firestore';
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
@@ -198,6 +199,21 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
   const handleFileCancel = (type: string) => {
     setSelectedFile(null);
   };
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        if (alarm.imageUrl) {
+          const imageRef = ref(storage, alarm.imageUrl);
+          const url = await getDownloadURL(imageRef);
+          setImageURL(url);
+        }
+      } catch (error) {
+        console.error("Error fetching images: ", error);
+      }
+    };
+
+    fetchImages();
+  }, [alarm.imageUrl]);
 
   const handleIsMonChange = () => setWeekDays(weekDays + (isMon() ? -1 : 1));
   const handleIsTueChange = () => setWeekDays(weekDays + (isTue() ? -2 : 2));
