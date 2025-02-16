@@ -55,7 +55,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   try {
       const db: Firestore = getFirestore(firebaseApp!);
       const postCollection = collection(db, 'alarms');
-      const querySnapshot = await getDocs(query(postCollection, orderBy("createDt","contens")));
+      const querySnapshot = await getDocs(query(postCollection, orderBy("createDt","desc")));
       const alarms: DocumentData[] = querySnapshot.docs.map(doc => ({
           ...doc.data(),
           createDt: doc.data().createDt ? doc.data().createDt.toDate().toISOString() : null,
