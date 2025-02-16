@@ -22,6 +22,15 @@ const AlarmPage = ({alarms}: Alarms) => {
       <div>
       <header className="flex h-14 items-center gap-4 border-b bg-gray-100/40 px-6 lg:h-[60px]" />
         <div className="grid grid-cols-1 gap-4 p-4">
+          <div className="flex justify-end gap-4">
+            <button
+              onClick={() => handle_alarm_detail_by_id('new')}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              새로 만들기
+            </button>
+          </div>
+
           <div className="border shadow-sm rounded-lg">
             <Table>
               <TableHeader>
