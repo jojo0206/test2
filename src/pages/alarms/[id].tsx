@@ -86,8 +86,8 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [hour, setHour] = useState<number | null>(alarm.hour);
-  const [minute, setMinute] = useState<number | null>(alarm.minute);
+  const [hour, setHour] = useState<number>(alarm.hour || 12);
+  const [minute, setMinute] = useState<number>(alarm.minute || 0);
   const [weekDays, setWeekDays] = useState<number>(alarm.weekDays || 1);
 
   const [sendUserIdList, setSendUserIdList] = useState<string>(alarm.sendUserIdList || "")
