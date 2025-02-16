@@ -18,7 +18,7 @@ const MyDropdown = () => (
 
     <DropdownMenu.Portal>
       <DropdownMenu.Content>
-        <DropdownMenu.Item className="background-color: white">
+        <DropdownMenu.Item className="bg-white">
           항목 1
         </DropdownMenu.Item>
         <DropdownMenu.Item>
