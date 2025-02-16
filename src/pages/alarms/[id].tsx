@@ -112,8 +112,8 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
     return weekDaysVal >= 1;
   }
 
-  const handleIsMonChange = () => setWeekDays(weekDays + (isMon() ? 1 : -1));
-  const handleIsTueChange = () => setWeekDays(weekDays + (isTue() ? 2 : -2));
+  const handleIsMonChange = () => setWeekDays(weekDays + (isMon() ? -1 : 1));
+  const handleIsTueChange = () => setWeekDays(weekDays + (isTue() ? -2 : 2));
 
   const handleRepeatChange = () => setRepeat(!repeat);
 
@@ -212,7 +212,7 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
             onChange={handleIsMonChange}
             className="flex w-200 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
-          <label htmlFor="isMon" className="block text-gray-700 font-regular mb-1">
+          <label htmlFor="isTue" className="block text-gray-700 font-regular mb-1">
             화요일
           </label>
           <Input
