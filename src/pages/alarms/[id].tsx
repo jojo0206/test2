@@ -25,13 +25,17 @@ const MyDropdown = ({title}: MyDropdownProps) => (
     <DropdownMenu.Portal>
       <DropdownMenu.Content
       style={{
-        maxHeight: '200px',
+        maxHeight: '325px',
         overflowY: 'auto'
       }}
       >
         {menuItems.map((item) => (
-          <DropdownMenu.Item className="bg-white" key={item}>
-            _      {item.toString().padStart(2, '0')}        _
+          <DropdownMenu.Item 
+            key={item}
+            style={{ height: '50px', width: '100px' }}
+            className="flex items-center px-4 bg-white"          
+          >
+            {item.toString().padStart(2, '0')}
           </DropdownMenu.Item>
         ))}
       </DropdownMenu.Content>
