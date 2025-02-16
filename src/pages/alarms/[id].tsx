@@ -13,7 +13,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 const hourItems = Array.from({ length: 24 }, (_, index) => index + 1);
 
 interface HourDropdownProps {
-  title: string
+  title: number
 }
 
 const HourDropdown = ({title}: HourDropdownProps) => (
@@ -46,7 +46,7 @@ const HourDropdown = ({title}: HourDropdownProps) => (
 const minItems = Array.from({ length: 60 }, (_, index) => index);
 
 interface MinDropdownProps {
-  title: string
+  title: number
 }
 
 const MinDropdown = ({title}: MinDropdownProps) => (
@@ -274,13 +274,13 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
           <label htmlFor="time" className="block text-gray-700 font-medium mb-1">
               시 선택
           </label>
-          <HourDropdown title={hour}/>
+          <HourDropdown title={hour || 12}/>
         </div>
         <div className=''>
           <label htmlFor="time" className="block text-gray-700 font-medium mb-1">
               분 선택
           </label>
-          <MinDropdown title={minute}/>
+          <MinDropdown title={minute || 0}/>
         </div>
         <div className=''>
           <label htmlFor="weekdays" className="block text-gray-700 font-medium mb-1">
