@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { collection, getFirestore, doc, updateDoc, addDoc } from 'firebase/firestore';
+import { collection, getFirestore, doc, updateDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 import { firebaseApp } from '@/firebase/firebaseClient';
 
 // export interface Alarm {
@@ -28,9 +28,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const db = getFirestore(firebaseApp!);
 
         if (imageUrl == null) {
-          const docRef = await addDoc(collection(db, "alarms"), { contents, name, sendType, sendUserIdList, repeat, weekDays, hour, minute });
+          const docRef = await addDoc(collection(db, "alarms"), { contents, name, sendType, sendUserIdList, repeat, weekDays, hour, minute, createDt: serverTimestamp() });
         } else {
-          const docRef = await addDoc(collection(db, "alarms"), { contents, name, sendType, sendUserIdList, repeat, weekDays, hour, minute, imageUrl });
+          const docRef = await addDoc(collection(db, "alarms"), { contents, name, sendType, sendUserIdList, repeat, weekDays, hour, minute, createDt: serverTimestamp(), imageUrl });
         }
         
         // const docRef = doc(db, 'alarms', id);

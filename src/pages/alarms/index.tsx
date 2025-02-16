@@ -68,6 +68,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       const alarms: DocumentData[] = querySnapshot.docs.map(doc => ({
           ...doc.data(),
           createDt: doc.data().createDt ? doc.data().createDt.toDate().toISOString() : null,
+          id: doc.id,
       }));
       return {
           props: {
