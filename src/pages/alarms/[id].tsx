@@ -114,6 +114,11 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
 
   const handleIsMonChange = () => setWeekDays(weekDays + (isMon() ? -1 : 1));
   const handleIsTueChange = () => setWeekDays(weekDays + (isTue() ? -2 : 2));
+  const handleIsWedChange = () => setWeekDays(weekDays + (isWed() ? -4 : 4));
+  const handleIsThuChange = () => setWeekDays(weekDays + (isThu() ? -8 : 8));
+  const handleIsFriChange = () => setWeekDays(weekDays + (isFri() ? -16 : 16));
+  const handleIsSatChange = () => setWeekDays(weekDays + (isSat() ? -32 : 32));
+  const handleIsSunChange = () => setWeekDays(weekDays + (isSun() ? -64 : 64));
 
   const handleRepeatChange = () => setRepeat(!repeat);
 
@@ -210,7 +215,7 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
             id="isMon"
             checked={isMon()}
             onChange={handleIsMonChange}
-            className="flex w-200 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
           <label htmlFor="isTue" className="block text-gray-700 font-regular mb-1">
             화요일
@@ -220,11 +225,59 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
             id="isTue"
             checked={isTue()}
             onChange={handleIsTueChange}
-            className="flex w-200 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+          <label htmlFor="isWed" className="block text-gray-700 font-regular mb-1">
+            수요일
+          </label>
+          <Input
+            type="checkbox"
+            id="isWed"
+            checked={isWed()}
+            onChange={handleIsWedChange}
+            className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+          <label htmlFor="isThu" className="block text-gray-700 font-regular mb-1">
+            목요일
+          </label>
+          <Input
+            type="checkbox"
+            id="isThu"
+            checked={isThu()}
+            onChange={handleIsThuChange}
+            className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+          <label htmlFor="isFri" className="block text-gray-700 font-regular mb-1">
+            금요일
+          </label>
+          <Input
+            type="checkbox"
+            id="isFri"
+            checked={isFri()}
+            onChange={handleIsFriChange}
+            className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+          <label htmlFor="isSat" className="block text-gray-700 font-regular mb-1">
+            토요일
+          </label>
+          <Input
+            type="checkbox"
+            id="isSat"
+            checked={isSat()}
+            onChange={handleIsSatChange}
+            className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+          <label htmlFor="isSun" className="block text-gray-700 font-regular mb-1">
+            일요일
+          </label>
+          <Input
+            type="checkbox"
+            id="isSun"
+            checked={isSun()}
+            onChange={handleIsSunChange}
+            className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
-  <div className="h-25 d-inline-block">Height 25%</div>
-  <div className="h-50 d-inline-block">Height 50%</div>
 
         <div className="flex justify-end gap-4">
           <button
