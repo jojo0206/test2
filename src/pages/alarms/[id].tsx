@@ -90,6 +90,8 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
   const [minute, setMinute] = useState<number | null>(alarm.minute);
   const [weekDays, setWeekDays] = useState<number>(alarm.weekDays || 1);
 
+  const [sendUserIdList, setSendUserIdList] = useState<string>(alarm.sendUserIdList || "")
+  
   const [repeat, setRepeat] = useState<boolean>(alarm.repeat || false);
   const [sendType, setSendType] = useState<number>(alarm.sendType || 1);
   const [name, setName] = useState<string>(alarm.name || "")
@@ -233,10 +235,13 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
+      // const { id,name,sendType,sendUserIdList,contents, repeat, weekDays, hour, minute, imageUrl } = req.body.data;
       const response = await axios.post('/api/alarms/update', {
         data: {
           id: alarm.id,
           contents: content,
+          sendUserIdList: sendUserIdList,
+          imageUrl: imageURL,
           hour: hour,
           minute: minute,
           weekDays: weekDays,
