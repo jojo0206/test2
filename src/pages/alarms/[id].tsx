@@ -187,6 +187,20 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
     return weekDaysVal >= 1;
   }
 
+  const handleIsSendTypeAllChange = () => setSendType(1);
+  const handleIsSendTypeResChange = () => setSendType(2);
+  const handleIsSendTypeIdListChange = () => setSendType(3);  
+
+  const isSendTypeAll = () => {
+    return sendType == 1;
+  }  
+  const isSendTypeRes = () => {
+    return sendType == 2;
+  }  
+  const isSendTypeIdList = () => {
+    return sendType == 3;
+  }  
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -289,6 +303,54 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
             value={alarm.name}
           />
         </div>
+
+
+        <div className=''>
+          <label htmlFor="sendType" className="block text-gray-700 font-medium mb-1">
+            대상 선택
+          </label>
+          <div className='flex w-full space-x-4'>
+            <div className="w-auto">
+              <label htmlFor="isSendTypeAll" className="block text-gray-700 font-regular mb-1">
+                전체 회원 
+              </label>
+              <Input
+                type="checkbox"
+                id="isSendTypeAll"
+                checked={isSendTypeAll()}
+                onChange={handleIsSendTypeAllChange}
+                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div className="w-auto">
+              <label htmlFor="isSendTypeRes" className="block text-gray-700 font-regular mb-1">
+                식당 회원 
+              </label>
+              <Input
+                type="checkbox"
+                id="isSendTypeRes"
+                checked={isSendTypeRes()}
+                onChange={handleIsSendTypeResChange}
+                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+
+            <div className="w-auto">
+              <label htmlFor="isSendTypeIdList" className="block text-gray-700 font-regular mb-1">
+              특정ID만 
+              </label>
+              <Input
+                type="checkbox"
+                id="isSendTypeIdList"
+                checked={isSendTypeIdList()}
+                onChange={handleIsSendTypeIdListChange}
+                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+          </div>
+        </div>
+
+
         <div>
           <label htmlFor="body" className="block text-gray-700 font-medium mb-1">
             내용
