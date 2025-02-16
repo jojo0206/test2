@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { Input, Textarea, DetailPageHeader } from "@/components/ui"
-import { firebaseApp } from "@/firebase/firebaseClient";
+import { firebaseApp, storage } from "@/firebase/firebaseClient";
 import { Firestore, DocumentData,getFirestore, doc, getDoc } from 'firebase/firestore';
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
