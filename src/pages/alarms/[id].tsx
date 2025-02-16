@@ -302,7 +302,7 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
             </label>
             {imageURL && 
               <div className='flex justify-center items-center flex-col'>
-                <img src={imageURL} alt={`${store.name} Image`} width={"360px"} height={"360px"} />
+                <img src={imageURL} alt={`${alarm.name} Image`} width={"360px"} height={"360px"} />
                 <button onClick={() => setImageURL("")} className="mt-4 bg-red-500 text-white px-4 py-2 rounded">
                   파일 선택
                 </button>
