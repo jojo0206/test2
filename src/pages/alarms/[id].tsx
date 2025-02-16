@@ -245,6 +245,9 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
   const handleContent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(event.target.value)
   }
+  const handleSendUserIdList = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setSendUserIdList(event.target.value)
+  }  
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -350,6 +353,17 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
           </div>
         </div>
 
+        <div>
+          <label htmlFor="body" className="block text-gray-700 font-medium mb-1">
+            특정ID목록(줄바꿈으로 구분)
+          </label>
+          <Textarea
+            id="body"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            value={sendUserIdList}
+            onChange={handleSendUserIdList}
+          />
+        </div>
 
         <div>
           <label htmlFor="body" className="block text-gray-700 font-medium mb-1">
