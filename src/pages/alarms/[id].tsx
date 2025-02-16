@@ -32,81 +32,81 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
     return (isSun() ? weekDays - 64 : weekDays) >= 32;
   }
   const isFri = () => {
-    var weekDays16 = weekDays;
-    if (isSun()) {
-      weekDays16 -=  64;
+    var weekDaysVal = weekDays;
+    if (weekDaysVal >= 64) {
+      weekDaysVal -=  64;
     }
-    if (isSat()) {
-      weekDays16 -=  32;
+    if (weekDaysVal >= 32) {
+      weekDaysVal -=  32;
     }
-    return weekDays16 >= 16;
+    return weekDaysVal >= 16;
   }
   const isThu = () => {
     var weekDaysVal = weekDays;
-    if (isSun()) {
+    if (weekDaysVal >= 64) {
       weekDaysVal -=  64;
     }
-    if (isSat()) {
+    if (weekDaysVal >= 32) {
       weekDaysVal -=  32;
     }
-    if (isFri()) {
+    if (weekDaysVal >= 16) {
       weekDaysVal -=  16;
     }
     return weekDaysVal >= 8;
   }
   const isWed = () => {
     var weekDaysVal = weekDays;
-    if (isSun()) {
+    if (weekDaysVal >= 64) {
       weekDaysVal -=  64;
     }
-    if (isSat()) {
+    if (weekDaysVal >= 32) {
       weekDaysVal -=  32;
     }
-    if (isFri()) {
+    if (weekDaysVal >= 16) {
       weekDaysVal -=  16;
     }
-    if (isThu()) {
+    if (weekDaysVal >= 8) {
       weekDaysVal -=  8;
     }
     return weekDaysVal >= 4;
   }
   const isTue = () => {
     var weekDaysVal = weekDays;
-    if (isSun()) {
+    if (weekDaysVal >= 64) {
       weekDaysVal -=  64;
     }
-    if (isSat()) {
+    if (weekDaysVal >= 32) {
       weekDaysVal -=  32;
     }
-    if (isFri()) {
+    if (weekDaysVal >= 16) {
       weekDaysVal -=  16;
     }
-    if (isThu()) {
+    if (weekDaysVal >= 8) {
       weekDaysVal -=  8;
     }
-    if (isWed()) {
+    if (weekDaysVal >= 4) {
       weekDaysVal -=  4;
     }
     return weekDaysVal >= 2;
   }
   const isMon = () => {
     var weekDaysVal = weekDays;
-    if (isSun()) {
+    if (weekDaysVal >= 64) {
       weekDaysVal -=  64;
     }
-    if (isSat()) {
+    if (weekDaysVal >= 32) {
       weekDaysVal -=  32;
     }
-    if (isFri()) {
+    if (weekDaysVal >= 16) {
       weekDaysVal -=  16;
     }
-    if (isThu()) {
+    if (weekDaysVal >= 8) {
       weekDaysVal -=  8;
     }
-    if (isWed()) {
+    if (weekDaysVal >= 4) {
       weekDaysVal -=  4;
     }
-    if (isTue()) {
+    if (weekDaysVal >= 2) {
       weekDaysVal -=  2;
     }
     return weekDaysVal >= 1;
