@@ -32,12 +32,12 @@ const AlarmPage = ({alarms}: Alarms) => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {alarms.map(({id,contents,createDt}: Alarm) => {
+                {alarms.map(({id,name,createDt}: Alarm) => {
                   const createdAt = dayjs(createDt).format("YYYY-MM-DD")
                   return (
                     <TableRow key={id} onClick={() => handle_alarm_detail_by_id(id)} className="cursor-pointer"> 
                       <TableCell className="font-medium">{id}</TableCell>
-                      <TableCell>{contents}</TableCell>
+                      <TableCell>{name}</TableCell>
                       <TableCell>{createdAt}</TableCell>
                     </TableRow>
                   )
