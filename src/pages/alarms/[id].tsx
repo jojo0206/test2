@@ -12,10 +12,10 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 const menuItems = Array.from({ length: 60 }, (_, index) => index);
 
-const MyDropdown = () => (
+const MyDropdown = ({title}) => (
   <DropdownMenu.Root>
     <DropdownMenu.Trigger asChild>
-      <button>메뉴 열기</button>
+      <button>{title}</button>
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Portal>
@@ -229,7 +229,7 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
                 시간 선택
               </label>
 
-              <MyDropdown />
+              <MyDropdown title="시간 선택"/>
 
         </div>
         <div className=''>
