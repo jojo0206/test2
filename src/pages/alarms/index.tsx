@@ -36,7 +36,7 @@ const AlarmPage = ({alarms}: Alarms) => {
               <TableHeader>
                 <TableRow className='pointer-events-none'>
                   <TableHead>Id</TableHead>
-                  <TableHead>Content</TableHead>
+                  <TableHead>Name</TableHead>
                   <TableHead>CreatedAt</TableHead>
                 </TableRow>
               </TableHeader>
