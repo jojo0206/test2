@@ -33,7 +33,7 @@ const HourDropdown = ({title, onSelectFilter}: HourDropdownProps) => (
     <DropdownMenuContent 
       className="w-56"
       style={{
-        maxHeight: '325px',
+        maxHeight: '500px',
         overflowY: 'auto'
       }}
     >
@@ -67,11 +67,11 @@ const MinDropdown = ({title, onSelectFilter}: MinDropdownProps) => (
     <DropdownMenuContent 
       className="w-56"
       style={{
-        maxHeight: '325px',
+        maxHeight: '500px',
         overflowY: 'auto'
       }}
     >
-      {hourItems.map((item) => (
+      {minItems.map((item) => (
         <DropdownMenuCheckboxItem 
           checked={title === item}
           onCheckedChange={() => onSelectFilter(item)}
