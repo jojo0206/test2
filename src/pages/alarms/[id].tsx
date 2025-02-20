@@ -32,10 +32,10 @@ const HourDropdown = ({title, onSelectFilter}: HourDropdownProps) => (
     </DropdownMenuTrigger>
     <DropdownMenuContent 
       className="w-56"
-      // style={{
-      //   maxHeight: '325px',
-      //   overflowY: 'auto'
-      // }}
+      style={{
+        maxHeight: '325px',
+        overflowY: 'auto'
+      }}
     >
       {hourItems.map((item) => (
         <DropdownMenuCheckboxItem 
@@ -66,10 +66,10 @@ const MinDropdown = ({title, onSelectFilter}: MinDropdownProps) => (
     </DropdownMenuTrigger>
     <DropdownMenuContent 
       className="w-56"
-      // style={{
-      //   maxHeight: '325px',
-      //   overflowY: 'auto'
-      // }}
+      style={{
+        maxHeight: '325px',
+        overflowY: 'auto'
+      }}
     >
       {hourItems.map((item) => (
         <DropdownMenuCheckboxItem 
