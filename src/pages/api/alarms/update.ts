@@ -23,14 +23,15 @@ import { firebaseApp } from '@/firebase/firebaseClient';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const { id,name,sendType,sendUserIdList,contents, repeat, weekDays, hour, minute, imageUrl } = req.body.data;
+    const sendDay = 0;
     if (id == null || id == '') {
       try {
         const db = getFirestore(firebaseApp!);
 
         if (imageUrl == null) {
-          const docRef = await addDoc(collection(db, "alarms"), { contents, name, sendType, sendUserIdList, repeat, weekDays, hour, minute, createDt: serverTimestamp() });
+          const docRef = await addDoc(collection(db, "alarms"), { contents, name, sendType, sendUserIdList, repeat, weekDays, hour, minute, sendDay, createDt: serverTimestamp() });
         } else {
-          const docRef = await addDoc(collection(db, "alarms"), { contents, name, sendType, sendUserIdList, repeat, weekDays, hour, minute, createDt: serverTimestamp(), imageUrl });
+          const docRef = await addDoc(collection(db, "alarms"), { contents, name, sendType, sendUserIdList, repeat, weekDays, hour, minute, sendDay, createDt: serverTimestamp(), imageUrl });
         }
         
         // const docRef = doc(db, 'alarms', id);

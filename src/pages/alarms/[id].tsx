@@ -9,73 +9,81 @@ import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { Alarm } from '@/interface';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { UploadIcon } from '../../components/icon/UploadIcon';
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 const hourItems = Array.from({ length: 24 }, (_, index) => index + 1);
 
 interface HourDropdownProps {
+  onSelectFilter: (newFilter: number) => void,
   title: number
 }
 
-const HourDropdown = ({title}: HourDropdownProps) => (
-  <DropdownMenu.Root>
-    <DropdownMenu.Trigger asChild>
-      <button>{title} 시</button>
-    </DropdownMenu.Trigger>
-
-    <DropdownMenu.Portal>
-      <DropdownMenu.Content
-      style={{
-        maxHeight: '325px',
-        overflowY: 'auto'
-      }}
-      >
-        {hourItems.map((item) => (
-          <DropdownMenu.Item 
-            key={item}
-            style={{ height: '50px', width: '100px' }}
-            className="flex items-center px-4 bg-white"          
-          >
-            {item.toString().padStart(2, '0')}
-          </DropdownMenu.Item>
-        ))}
-      </DropdownMenu.Content>
-    </DropdownMenu.Portal>
-  </DropdownMenu.Root>
+const HourDropdown = ({title, onSelectFilter}: HourDropdownProps) => (
+  <DropdownMenu>
+    <DropdownMenuTrigger asChild>
+      <Button variant="outline">{title} 시</Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent 
+      className="w-56"
+      // style={{
+      //   maxHeight: '325px',
+      //   overflowY: 'auto'
+      // }}
+    >
+      {hourItems.map((item) => (
+        <DropdownMenuCheckboxItem 
+          checked={title === item}
+          onCheckedChange={() => onSelectFilter(item)}
+          // key={item}
+          // style={{ height: '50px', width: '100px' }}
+          // className="flex items-center px-4 bg-white"          
+        >
+          {item.toString().padStart(2, '0')}
+        </DropdownMenuCheckboxItem>
+      ))}
+    </DropdownMenuContent>
+  </DropdownMenu>
 );
 
 const minItems = Array.from({ length: 12 }, (_, index) => index * 5);
 
 interface MinDropdownProps {
+  onSelectFilter: (newFilter: number) => void,
   title: number
 }
 
-const MinDropdown = ({title}: MinDropdownProps) => (
-  <DropdownMenu.Root>
-    <DropdownMenu.Trigger asChild>
-      <button>{title} 분</button>
-    </DropdownMenu.Trigger>
-
-    <DropdownMenu.Portal>
-      <DropdownMenu.Content
-      style={{
-        maxHeight: '325px',
-        overflowY: 'auto'
-      }}
-      >
-        {minItems.map((item) => (
-          <DropdownMenu.Item 
-            key={item}
-            style={{ height: '50px', width: '100px' }}
-            className="flex items-center px-4 bg-white"          
-          >
-            {item.toString().padStart(2, '0')}
-          </DropdownMenu.Item>
-        ))}
-      </DropdownMenu.Content>
-    </DropdownMenu.Portal>
-  </DropdownMenu.Root>
+const MinDropdown = ({title, onSelectFilter}: MinDropdownProps) => (
+  <DropdownMenu>
+    <DropdownMenuTrigger asChild>
+      <Button variant="outline">{title} 분</Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent 
+      className="w-56"
+      // style={{
+      //   maxHeight: '325px',
+      //   overflowY: 'auto'
+      // }}
+    >
+      {hourItems.map((item) => (
+        <DropdownMenuCheckboxItem 
+          checked={title === item}
+          onCheckedChange={() => onSelectFilter(item)}
+          // key={item}
+          // style={{ height: '50px', width: '100px' }}
+          // className="flex items-center px-4 bg-white"          
+        >
+          {item.toString().padStart(2, '0')}
+        </DropdownMenuCheckboxItem>
+      ))}
+    </DropdownMenuContent>
+  </DropdownMenu>
 );
 
 interface AlarmProps {
@@ -239,6 +247,14 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
   const handleIsFriChange = () => setWeekDays(weekDays + (isFri() ? -16 : 16));
   const handleIsSatChange = () => setWeekDays(weekDays + (isSat() ? -32 : 32));
   const handleIsSunChange = () => setWeekDays(weekDays + (isSun() ? -64 : 64));
+
+  const handleHour = (number: number) => {
+    setHour(number);
+  }
+
+  const handleMinute = (number: number) => {
+    setMinute(number);
+  }
 
   const handleRepeatChange = () => setRepeat(!repeat);
 
@@ -459,13 +475,13 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
           <label htmlFor="time" className="block text-gray-700 font-medium mb-1">
               시 선택
           </label>
-          <HourDropdown title={hour || 12}/>
+          <HourDropdown title={hour || 12} onSelectFilter={handleHour} />
         </div>
         <div className=''>
           <label htmlFor="time" className="block text-gray-700 font-medium mb-1">
               분 선택
           </label>
-          <MinDropdown title={minute || 0}/>
+          <MinDropdown title={minute || 0} onSelectFilter={handleMinute}/>
         </div>
         <div className=''>
           <label htmlFor="weekdays" className="block text-gray-700 font-medium mb-1">
