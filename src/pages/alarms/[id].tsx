@@ -40,6 +40,7 @@ const KimageDropdown = ({kimages, onSelectFilter}: KimageDropdownProps) => (
           checked={false}
           onCheckedChange={() => onSelectFilter(item.id)}
         >
+          item.id
           <img src={item.imageUrl} alt={`${item.name} Image`} width={"360px"} height={"360px"} />
         </DropdownMenuCheckboxItem>
       ))}
