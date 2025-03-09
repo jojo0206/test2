@@ -96,6 +96,21 @@ export interface Alarm {
   createDt: string;
 }
 
+export interface Kimage {
+  id: string;
+  name: string;
+  desc: string;
+  keywords: Array<Keyword>;
+  path: string;
+  createDt: string;
+}
+
+export interface Keyword {
+  id: string;
+  content: string;
+  imageId: string;
+}
+
 export interface User {
   id: string;
   password: string;
