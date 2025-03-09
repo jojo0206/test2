@@ -9,7 +9,7 @@ import { Keyword, Kimage } from '@/interface';
 
 interface Kimages {
   kimages : Array<Kimage>
-  keywords: Array<Keyword>
+  // keywords: Array<Keyword>
 }
 
 const KimagePage = ({kimages}: Kimages) => {
@@ -72,18 +72,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
           id: doc.id,
       }));
 
-      const keywordCollection = collection(db, 'keywords');
-      const keywordQuerySnapshot = await getDocs(query(keywordCollection, orderBy("createDt","desc")));
-      const keywords: DocumentData[] = keywordQuerySnapshot.docs.map(doc => ({
-          ...doc.data(),
-          createDt: doc.data().createDt ? doc.data().createDt.toDate().toISOString() : null,
-          id: doc.id,
-      }));
-
       return {
           props: {
               kimages: kimages,
-              keywords: keywords,
+              // keywords: keywords,
           },
       };
   } catch (error) {
@@ -91,7 +83,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       return {
           props: {
             kimages: [],
-            keywords: [],
+            // keywords: [],
           },
       };
   }

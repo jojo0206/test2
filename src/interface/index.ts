@@ -101,7 +101,7 @@ export interface Kimage {
   name: string;
   desc: string;
   keywords: Array<Keyword>;
-  path: string;
+  imageUrl: string;
   createDt: string;
 }
 

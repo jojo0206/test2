@@ -2,13 +2,16 @@ import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { Input, Textarea, DetailPageHeader } from "@/components/ui"
 import { firebaseApp, storage } from "@/firebase/firebaseClient";
-import { Firestore, DocumentData,getFirestore, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, Firestore, DocumentData,getFirestore, doc, getDoc } from 'firebase/firestore';
+
+// import { collection, getDocs, Firestore, DocumentData,getFirestore, orderBy, query } from 'firebase/firestore';
+
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import { Kimage } from '@/interface';
+import { Keyword, Kimage } from '@/interface';
 import { UploadIcon } from '../../components/icon/UploadIcon';
 import { Button } from "@/components/ui/button"
 import {
@@ -88,126 +91,18 @@ const MinDropdown = ({title, onSelectFilter}: MinDropdownProps) => (
 
 interface KimageProps {
   kimage: Kimage
+  keywords: Array<Keyword>
 }
   
 const KimageDetailPage = ({kimage}: KimageProps) => {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [hour, setHour] = useState<number>(kimage.hour || 12);
-  const [minute, setMinute] = useState<number>(kimage.minute || 0);
-  const [weekDays, setWeekDays] = useState<number>(kimage.weekDays || 1);
-
-  const [sendUserIdList, setSendUserIdList] = useState<string>(kimage.sendUserIdList || "")
-  
-  const [repeat, setRepeat] = useState<boolean>(kimage.repeat || false);
-  const [sendType, setSendType] = useState<number>(kimage.sendType || 1);
   const [name, setName] = useState<string>(kimage.name || "")
-  const [content, setContent] = useState<string>(kimage.contents || "")
+  const [desc, setDesc] = useState<string>(kimage.desc || "")
 
   const [imageURL, setImageURL] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-  const isSun = () => {
-    return weekDays >= 64;
-  }
-  const isSat = () => {
-    return (isSun() ? weekDays - 64 : weekDays) >= 32;
-  }
-  const isFri = () => {
-    var weekDaysVal = weekDays;
-    if (weekDaysVal >= 64) {
-      weekDaysVal -=  64;
-    }
-    if (weekDaysVal >= 32) {
-      weekDaysVal -=  32;
-    }
-    return weekDaysVal >= 16;
-  }
-  const isThu = () => {
-    var weekDaysVal = weekDays;
-    if (weekDaysVal >= 64) {
-      weekDaysVal -=  64;
-    }
-    if (weekDaysVal >= 32) {
-      weekDaysVal -=  32;
-    }
-    if (weekDaysVal >= 16) {
-      weekDaysVal -=  16;
-    }
-    return weekDaysVal >= 8;
-  }
-  const isWed = () => {
-    var weekDaysVal = weekDays;
-    if (weekDaysVal >= 64) {
-      weekDaysVal -=  64;
-    }
-    if (weekDaysVal >= 32) {
-      weekDaysVal -=  32;
-    }
-    if (weekDaysVal >= 16) {
-      weekDaysVal -=  16;
-    }
-    if (weekDaysVal >= 8) {
-      weekDaysVal -=  8;
-    }
-    return weekDaysVal >= 4;
-  }
-  const isTue = () => {
-    var weekDaysVal = weekDays;
-    if (weekDaysVal >= 64) {
-      weekDaysVal -=  64;
-    }
-    if (weekDaysVal >= 32) {
-      weekDaysVal -=  32;
-    }
-    if (weekDaysVal >= 16) {
-      weekDaysVal -=  16;
-    }
-    if (weekDaysVal >= 8) {
-      weekDaysVal -=  8;
-    }
-    if (weekDaysVal >= 4) {
-      weekDaysVal -=  4;
-    }
-    return weekDaysVal >= 2;
-  }
-  const isMon = () => {
-    var weekDaysVal = weekDays;
-    if (weekDaysVal >= 64) {
-      weekDaysVal -=  64;
-    }
-    if (weekDaysVal >= 32) {
-      weekDaysVal -=  32;
-    }
-    if (weekDaysVal >= 16) {
-      weekDaysVal -=  16;
-    }
-    if (weekDaysVal >= 8) {
-      weekDaysVal -=  8;
-    }
-    if (weekDaysVal >= 4) {
-      weekDaysVal -=  4;
-    }
-    if (weekDaysVal >= 2) {
-      weekDaysVal -=  2;
-    }
-    return weekDaysVal >= 1;
-  }
-
-  const handleIsSendTypeAllChange = () => setSendType(1);
-  const handleIsSendTypeResChange = () => setSendType(2);
-  const handleIsSendTypeIdListChange = () => setSendType(3);  
-
-  const isSendTypeAll = () => {
-    return sendType == 1;
-  }  
-  const isSendTypeRes = () => {
-    return sendType == 2;
-  }  
-  const isSendTypeIdList = () => {
-    return sendType == 3;
-  }  
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -240,32 +135,11 @@ const KimageDetailPage = ({kimage}: KimageProps) => {
     fetchImages();
   }, [kimage.imageUrl]);
 
-  const handleIsMonChange = () => setWeekDays(weekDays + (isMon() ? -1 : 1));
-  const handleIsTueChange = () => setWeekDays(weekDays + (isTue() ? -2 : 2));
-  const handleIsWedChange = () => setWeekDays(weekDays + (isWed() ? -4 : 4));
-  const handleIsThuChange = () => setWeekDays(weekDays + (isThu() ? -8 : 8));
-  const handleIsFriChange = () => setWeekDays(weekDays + (isFri() ? -16 : 16));
-  const handleIsSatChange = () => setWeekDays(weekDays + (isSat() ? -32 : 32));
-  const handleIsSunChange = () => setWeekDays(weekDays + (isSun() ? -64 : 64));
-
-  const handleHour = (number: number) => {
-    setHour(number);
-  }
-
-  const handleMinute = (number: number) => {
-    setMinute(number);
-  }
-
-  const handleRepeatChange = () => setRepeat(!repeat);
-
   const handleNameChange = ({target: { value }}: React.ChangeEvent<HTMLInputElement>) => setName(value);
 
-  const handleContent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(event.target.value)
+  const handleDescChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDesc(event.target.value)
   }
-  const handleSendUserIdList = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setSendUserIdList(event.target.value)
-  }  
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -283,15 +157,9 @@ const KimageDetailPage = ({kimage}: KimageProps) => {
       const response = await axios.post('/api/kimages/update', {
         data: {
           id: kimage.id,
-          contents: content,
-          sendUserIdList: sendUserIdList,
+          desc: desc,
           imageUrl: imageUrl,
-          hour: hour,
-          minute: minute,
-          weekDays: weekDays,
-          sendType: sendType,
-          name: name,
-          repeat: repeat
+          name: name
         }
       });
       if(response.status === 200){
@@ -335,73 +203,15 @@ const KimageDetailPage = ({kimage}: KimageProps) => {
           />
         </div>
 
-
-        <div className=''>
-          <label htmlFor="sendType" className="block text-gray-700 font-medium mb-1">
-            대상 선택
-          </label>
-          <div className='flex w-full space-x-4'>
-            <div className="w-auto">
-              <label htmlFor="isSendTypeAll" className="block text-gray-700 font-regular mb-1">
-                전체 회원 
-              </label>
-              <Input
-                type="checkbox"
-                id="isSendTypeAll"
-                checked={isSendTypeAll()}
-                onChange={handleIsSendTypeAllChange}
-                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div className="w-auto">
-              <label htmlFor="isSendTypeRes" className="block text-gray-700 font-regular mb-1">
-                식당 회원 
-              </label>
-              <Input
-                type="checkbox"
-                id="isSendTypeRes"
-                checked={isSendTypeRes()}
-                onChange={handleIsSendTypeResChange}
-                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-
-            <div className="w-auto">
-              <label htmlFor="isSendTypeIdList" className="block text-gray-700 font-regular mb-1">
-              특정ID만 
-              </label>
-              <Input
-                type="checkbox"
-                id="isSendTypeIdList"
-                checked={isSendTypeIdList()}
-                onChange={handleIsSendTypeIdListChange}
-                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-          </div>
-        </div>
-
         <div>
           <label htmlFor="body" className="block text-gray-700 font-medium mb-1">
-            특정ID목록(줄바꿈으로 구분)
+            설명
           </label>
           <Textarea
-            id="body"
+            id="desc"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            value={sendUserIdList}
-            onChange={handleSendUserIdList}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="body" className="block text-gray-700 font-medium mb-1">
-            내용
-          </label>
-          <Textarea
-            id="body"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            value={content}
-            onChange={handleContent}
+            value={desc}
+            onChange={handleDescChange}
           />
         </div>
 
@@ -456,124 +266,6 @@ const KimageDetailPage = ({kimage}: KimageProps) => {
             />
           </div>
 
-
-
-
-        <div className=''>
-          <label htmlFor="repeat" className="block text-gray-700 font-medium mb-1">
-                반복 여부
-              </label>
-          <Input
-            type="checkbox"
-            id="repeat"
-            checked={repeat}
-            onChange={handleRepeatChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-        <div className=''>
-          <label htmlFor="time" className="block text-gray-700 font-medium mb-1">
-              시 선택
-          </label>
-          <HourDropdown title={hour || 12} onSelectFilter={handleHour} />
-        </div>
-        <div className=''>
-          <label htmlFor="time" className="block text-gray-700 font-medium mb-1">
-              분 선택
-          </label>
-          <MinDropdown title={minute || 0} onSelectFilter={handleMinute}/>
-        </div>
-        <div className=''>
-          <label htmlFor="weekdays" className="block text-gray-700 font-medium mb-1">
-            요일 선택
-          </label>
-          <div className='flex w-full space-x-4'>
-            <div className="w-auto">
-              <label htmlFor="isMon" className="block text-gray-700 font-regular mb-1">
-                월요일
-              </label>
-              <Input
-                type="checkbox"
-                id="isMon"
-                checked={isMon()}
-                onChange={handleIsMonChange}
-                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div className="w-auto">
-              <label htmlFor="isTue" className="block text-gray-700 font-regular mb-1">
-                화요일
-              </label>
-              <Input
-                type="checkbox"
-                id="isTue"
-                checked={isTue()}
-                onChange={handleIsTueChange}
-                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-
-            <div className="w-auto">
-              <label htmlFor="isWed" className="block text-gray-700 font-regular mb-1">
-              수요일
-              </label>
-              <Input
-                type="checkbox"
-                id="isWed"
-                checked={isWed()}
-                onChange={handleIsWedChange}
-                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div className="w-auto">
-              <label htmlFor="isThu" className="block text-gray-700 font-regular mb-1">
-              목요일
-              </label>
-              <Input
-                type="checkbox"
-                id="isThu"
-                checked={isThu()}
-                onChange={handleIsThuChange}
-                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div className="w-auto">
-              <label htmlFor="isFri" className="block text-gray-700 font-regular mb-1">
-              금요일
-              </label>
-              <Input
-                type="checkbox"
-                id="isFri"
-                checked={isFri()}
-                onChange={handleIsFriChange}
-                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div className="w-auto">
-              <label htmlFor="isSat" className="block text-gray-700 font-regular mb-1">
-              토요일
-              </label>
-              <Input
-                type="checkbox"
-                id="isSat"
-                checked={isSat()}
-                onChange={handleIsSatChange}
-                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div className="w-auto">
-              <label htmlFor="isSun" className="block text-gray-700 font-regular mb-1">
-              일요일
-              </label>
-              <Input
-                type="checkbox"
-                id="isSun"
-                checked={isSun()}
-                onChange={handleIsSunChange}
-                className="flex w-10 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-          </div>
         </div>
 
         <div className="flex justify-end gap-4">
@@ -625,6 +317,7 @@ export const getServerSideProps: GetServerSideProps = async (context:GetServerSi
                 kimage: {
 
                 },
+                keywords: null,
             },
         };
   } else {
@@ -639,15 +332,27 @@ export const getServerSideProps: GetServerSideProps = async (context:GetServerSi
           };
         }
 
+        const keywordCollection = collection(db, 'keywords');
+        // collection(db, "cities"), where("capital", "==", true)
+        const keywordQuerySnapshot = await getDocs(query(keywordCollection, where("imageId", "==", kimageId), orderBy("createDt","desc")));
+        const keywords: DocumentData[] = keywordQuerySnapshot.docs.map(doc => ({
+            ...doc.data(),
+            createDt: doc.data().createDt ? doc.data().createDt.toDate().toISOString() : null,
+            id: doc.id,
+        }));
+  
         const kimage: DocumentData = {
             ...docSnapshot.data(),
             id: docSnapshot.id,
             createDt: docSnapshot.data().createDt ? docSnapshot.data().createDt.toDate().toISOString() : null,
         };
 
+        kimage.keywords = keywords;
+        
         return {
             props: {
                 kimage: kimage,
+                keywords: keywords,
             },
         };
 
@@ -656,6 +361,7 @@ export const getServerSideProps: GetServerSideProps = async (context:GetServerSi
         return {
             props: {
               kimage: null,
+              keywords: null,
             },
         };
     }
