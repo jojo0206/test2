@@ -2,13 +2,13 @@ import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { Input, Textarea, DetailPageHeader } from "@/components/ui"
 import { firebaseApp, storage } from "@/firebase/firebaseClient";
-import { Firestore, DocumentData,getFirestore, doc, getDoc } from 'firebase/firestore';
+import { Firestore, DocumentData,getFirestore, collection, getDocs, where, query, doc, getDoc } from 'firebase/firestore';
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import { Alarm } from '@/interface';
+import { Alarm, Kimage } from '@/interface';
 import { UploadIcon } from '../../components/icon/UploadIcon';
 import { Button } from "@/components/ui/button"
 import {
@@ -88,9 +88,10 @@ const MinDropdown = ({title, onSelectFilter}: MinDropdownProps) => (
 
 interface AlarmProps {
   alarm: Alarm
+  kimages: Array<Kimage>
 }
   
-const AlarmDetailPage = ({alarm}: AlarmProps) => {
+const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -324,7 +325,7 @@ const AlarmDetailPage = ({alarm}: AlarmProps) => {
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="title" className="block text-gray-700 font-medium mb-1">
-            이름
+            이름 {kimages.length}
           </label>
           <Input
             type="text"
@@ -645,9 +646,20 @@ export const getServerSideProps: GetServerSideProps = async (context:GetServerSi
             createDt: docSnapshot.data().createDt ? docSnapshot.data().createDt.toDate().toISOString() : null,
         };
 
+// 
+        const kimageCollection = collection(db, 'kimages');
+        const kimageQuerySnapshot = await getDocs(query(kimageCollection));//
+        const kimages: DocumentData[] = kimageQuerySnapshot.docs.map(doc => ({
+            ...doc.data(),
+            createDt: doc.data().createDt ? doc.data().createDt.toDate().toISOString() : null,
+            id: doc.id,
+        }));
+// 
+
         return {
             props: {
                 alarm: alarm,
+                kimages: kimages,
             },
         };
 
