@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { collection, getFirestore, doc, updateDoc, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, getFirestore, doc, updateDoc, getDocs, deleteDoc, query, where, addDoc, serverTimestamp } from 'firebase/firestore';
 import { firebaseApp } from '@/firebase/firebaseClient';
   
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           docRef = await addDoc(collection(db, "kimages"), { desc, name, createDt: serverTimestamp() });
         } else {
           docRef = await addDoc(collection(db, "kimages"), { desc, name, createDt: serverTimestamp(), imageUrl });
-        }
+        }    
 
         const keywordList = keywords.split('\n');
         for (let i = 0; i < keywordList.length; i++) {
@@ -39,6 +39,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const db = getFirestore(firebaseApp!);
         const docRef = doc(db, 'kimages', id);
         await updateDoc(docRef, { desc, name, imageUrl });
+
+        const d = query(collection(db, 'kimages'), where('imageId', '==', id));
+        const docSnap = await getDocs(d);
+        for (let i = 0; i < docSnap.length; i++) {
+          const doc = docSnap[i];
+          if (doc != null) {
+            await deleteDoc(doc.ref);
+          }
+        }
 
         const keywordList = keywords.split('\n');
         for (let i = 0; i < keywordList.length; i++) {
