@@ -187,7 +187,7 @@ const KimageDetailPage = ({kimage}: KimageProps) => {
 
   return (
     <div>
-      <DetailPageHeader title='알람'/>
+      <DetailPageHeader title='키워드 이미지'/>
       <div className="bg-white p-6 w-full">
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
@@ -264,7 +264,6 @@ const KimageDetailPage = ({kimage}: KimageProps) => {
               ref={fileInputRef}
               onChange={handleFileChange}
             />
-          </div>
 
         </div>
 
