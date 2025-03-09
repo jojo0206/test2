@@ -22,10 +22,10 @@ import {
 import { Grid, Menu, MenuItem } from "@mui/material";
 
 const DropdownGridMenu = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
