@@ -46,6 +46,9 @@ const KimageDropdown = ({kimages, onSelectFilter}: KimageDropdownProps) => (
           <label htmlFor="isSendTypeRes" className="block text-gray-700 font-regular mb-1">
             {kimages[0].name}
           </label>
+          1
+          </br>
+          2
           <img src={kimages[0].imageUrl} alt={`${kimages[0].name} Image`} width={"360px"} height={"360px"} />
         </DropdownMenuCheckboxItem>
       ))}
