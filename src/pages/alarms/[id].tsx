@@ -50,7 +50,7 @@ const DropdownGridMenu = ({kimages, onSelectFilter}: KimageDropdownProps) => {
         MenuListProps={{
           style: {
             display: "grid",
-            gridTemplateColumns: "repeat(3, 100px)", // 3열로 구성
+            gridTemplateColumns: "repeat(3, 300px)", // 3열로 구성
             gap: "10px",
           },
         }}
@@ -59,7 +59,7 @@ const DropdownGridMenu = ({kimages, onSelectFilter}: KimageDropdownProps) => {
           <MenuItem 
             onClick={() => onSelectFilter(item.id)}
           >
-            <img src={item.imageUrl} alt={`${item.name} Image`} width={"360px"} height={"360px"} />
+            <img src={item.imageUrl} alt={`${item.name} Image`} width={"300px"} height={"300px"} />
           </MenuItem>
         ))}
       </Menu>
