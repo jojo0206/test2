@@ -94,6 +94,8 @@ export interface Alarm {
   imageUrl: string;
 
   createDt: string;
+
+  kimageId: string;
 }
 
 export interface Kimage {

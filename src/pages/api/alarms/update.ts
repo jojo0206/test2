@@ -22,16 +22,16 @@ import { firebaseApp } from '@/firebase/firebaseClient';
   
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const { id,name,sendType,sendUserIdList,contents, repeat, weekDays, hour, minute, imageUrl } = req.body.data;
+    const { id,name,sendType,sendUserIdList,contents, repeat, weekDays, hour, minute, imageUrl, kimageId } = req.body.data;
     const sendDay = 0;
     if (id == null || id == '') {
       try {
         const db = getFirestore(firebaseApp!);
 
-        if (imageUrl == null) {
+        if (kimageId == null) {
           const docRef = await addDoc(collection(db, "alarms"), { contents, name, sendType, sendUserIdList, repeat, weekDays, hour, minute, sendDay, createDt: serverTimestamp() });
         } else {
-          const docRef = await addDoc(collection(db, "alarms"), { contents, name, sendType, sendUserIdList, repeat, weekDays, hour, minute, sendDay, createDt: serverTimestamp(), imageUrl });
+          const docRef = await addDoc(collection(db, "alarms"), { contents, name, sendType, sendUserIdList, repeat, weekDays, hour, minute, sendDay, createDt: serverTimestamp(), kimageId });
         }
         
         // const docRef = doc(db, 'alarms', id);
@@ -45,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       try {
         const db = getFirestore(firebaseApp!);
         const docRef = doc(db, 'alarms', id);
-        await updateDoc(docRef, { contents, name, sendType, sendUserIdList, repeat, weekDays, hour, minute, imageUrl });
+        await updateDoc(docRef, { contents, name, sendType, sendUserIdList, repeat, weekDays, hour, minute, kimageId });
         res.status(200).json({ message: 'Alarm updated Successfully'});
       } catch (error) {
         console.error("Error adding document: ", error);
