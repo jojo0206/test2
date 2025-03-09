@@ -78,7 +78,7 @@ const KimageDetailPage = ({kimage}: KimageProps) => {
     let imageUrl = kimage.imageUrl;
 
     if (selectedFile) {
-      const storageRef = ref(storage, `/store/image/${selectedFile}`);
+      const storageRef = ref(storage, `/store/image/${Date.now()}`);
       const snapshot = await uploadBytes(storageRef, selectedFile);
       imageUrl = await getDownloadURL(snapshot.ref);
     }
