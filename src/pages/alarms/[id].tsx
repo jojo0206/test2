@@ -559,6 +559,26 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
 
         <DropdownGridMenu kimages={kimages} onSelectFilter={handleKimage} />
 
+        <Menu
+        id="dropdown-menu"
+        open={true}
+        MenuListProps={{
+          style: {
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 300px)", // 3열로 구성
+            gap: "10px",
+          },
+        }}
+      >
+        {kimages.map((item) => (
+          <MenuItem 
+            onClick={() => handleKimage(item.id)}
+          >
+            <img src={item.imageUrl} alt={`${item.name} Image`} width={"300px"} height={"300px"} />
+          </MenuItem>
+        ))}
+      </Menu>
+
         <div className=''>
           <label htmlFor="repeat" className="block text-gray-700 font-medium mb-1">
                 반복 여부
