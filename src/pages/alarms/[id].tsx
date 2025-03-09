@@ -175,6 +175,8 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+
   const [hour, setHour] = useState<number>(alarm.hour || 12);
   const [minute, setMinute] = useState<number>(alarm.minute || 0);
   const [weekDays, setWeekDays] = useState<number>(alarm.weekDays || 1);
@@ -332,6 +334,7 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
   const handleIsSunChange = () => setWeekDays(weekDays + (isSun() ? -64 : 64));
 
   const handleKimage = (id: string) => {
+    setMenuOpen(false);
     setKimageId(id);
   }
 
@@ -557,11 +560,17 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
           </div>
 
 
-        <DropdownGridMenu kimages={kimages} onSelectFilter={handleKimage} />
+        {/* <DropdownGridMenu kimages={kimages} onSelectFilter={handleKimage} /> */}
+
+        <Button
+        onClick={() => setMenuOpen(true)}
+        >
+        키워드 이미지 선택
+      </Button>
 
         <Menu
         id="dropdown-menu"
-        open={true}
+        open={menuOpen}
         MenuListProps={{
           style: {
             display: "grid",
