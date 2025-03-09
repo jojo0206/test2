@@ -42,12 +42,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const d = query(collection(db, 'kimages'), where('imageId', '==', id));
         const docSnap = await getDocs(d);
-        for (let i = 0; i < docSnap.length; i++) {
-          const doc = docSnap[i];
-          if (doc != null) {
-            await deleteDoc(doc.ref);
-          }
-        }
+        await docSnap.forEach(async (doc) => {
+          await deleteDoc(doc.ref);
+        })
 
         const keywordList = keywords.split('\n');
         for (let i = 0; i < keywordList.length; i++) {
