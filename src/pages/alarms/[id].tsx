@@ -556,7 +556,7 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
           </div>
 
 
-
+{DropdownGridMenu()}
 
         <div className=''>
           <label htmlFor="repeat" className="block text-gray-700 font-medium mb-1">
