@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 interface KimageDropdownProps {
-  onSelectFilter: (newFilter: number) => void,
+  onSelectFilter: (newFilter: string) => void,
   kimages: Array<Kimage>
 }
 
@@ -35,21 +35,12 @@ const KimageDropdown = ({kimages, onSelectFilter}: KimageDropdownProps) => (
         overflowY: 'auto'
       }}
     >
-      asdf
-      <br>123</br>
-      <h1>sjdkf</h1>
-      {hourItems.map((item) => (
+      {kimages.map((item) => (
         <DropdownMenuCheckboxItem 
           checked={false}
-          onCheckedChange={() => onSelectFilter(item)}
-          // key={item}
-          // style={{ height: '50px', width: '100px' }}
-          // className="flex items-center px-4 bg-white"          
+          onCheckedChange={() => onSelectFilter(item.id)}
         >
-          <label htmlFor="isSendTypeRes" className="block text-gray-700 font-regular mb-1">
-            {kimages[0].name}
-          </label>
-          <img src={kimages[0].imageUrl} alt={`${kimages[0].name} Image`} width={"360px"} height={"360px"} />
+          <img src={item.imageUrl} alt={`${item.name} Image`} width={"360px"} height={"360px"} />
         </DropdownMenuCheckboxItem>
       ))}
     </DropdownMenuContent>
@@ -288,6 +279,10 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
   const handleIsSatChange = () => setWeekDays(weekDays + (isSat() ? -32 : 32));
   const handleIsSunChange = () => setWeekDays(weekDays + (isSun() ? -64 : 64));
 
+  const handleKimage = (id: string) => {
+    // setHour(number);
+  }
+
   const handleHour = (number: number) => {
     setHour(number);
   }
@@ -459,7 +454,7 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
               </div>
             }
 
-            <KimageDropdown kimages={kimages} onSelectFilter={handleHour} />
+            <KimageDropdown kimages={kimages} onSelectFilter={handleKimage} />
 
             {!imageURL && !selectedFile &&
               <div 
