@@ -40,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const docRef = doc(db, 'kimages', id);
         await updateDoc(docRef, { desc, name, imageUrl });
 
-        const d = query(collection(db, 'kimages'), where('imageId', '==', id));
+        const d = query(collection(db, 'keywords'), where('imageId', '==', id));
         const docSnap = await getDocs(d);
         await docSnap.forEach(async (doc) => {
           await deleteDoc(doc.ref);
