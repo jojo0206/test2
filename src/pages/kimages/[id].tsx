@@ -98,6 +98,7 @@ const KimageDetailPage = ({kimage}: KimageProps) => {
       const response = await axios.post('/api/kimages/update', {
         data: {
           id: kimage.id,
+          keywords: keywords,
           desc: desc,
           imageUrl: imageUrl,
           name: name
