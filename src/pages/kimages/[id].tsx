@@ -288,7 +288,6 @@ export const getServerSideProps: GetServerSideProps = async (context:GetServerSi
         }
 
         const keywordCollection = collection(db, 'keywords');
-        // collection(db, "cities"), where("capital", "==", true)
         const keywordQuerySnapshot = await getDocs(query(keywordCollection, where("imageId", "==", kimageId)));//
         const keywords: DocumentData[] = keywordQuerySnapshot.docs.map(doc => ({
             ...doc.data(),

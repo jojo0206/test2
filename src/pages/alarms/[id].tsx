@@ -22,10 +22,11 @@ const hourItems = Array.from({ length: 24 }, (_, index) => index + 1);
 
 interface HourDropdownProps {
   onSelectFilter: (newFilter: number) => void,
+  kimages: Array<Kimage>,
   title: number
 }
 
-const HourDropdown = ({title, onSelectFilter}: HourDropdownProps) => (
+const HourDropdown = ({title, kimages, onSelectFilter}: HourDropdownProps) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="outline">{title} 시</Button>
@@ -45,7 +46,7 @@ const HourDropdown = ({title, onSelectFilter}: HourDropdownProps) => (
           // style={{ height: '50px', width: '100px' }}
           // className="flex items-center px-4 bg-white"          
         >
-          {item.toString().padStart(2, '0')}
+          {item.toString().padStart(2, '0')} {kimages[0].id}
         </DropdownMenuCheckboxItem>
       ))}
     </DropdownMenuContent>
@@ -325,7 +326,7 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="title" className="block text-gray-700 font-medium mb-1">
-            이름 {kimages.length}
+            이름
           </label>
           <Input
             type="text"
@@ -476,7 +477,7 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
           <label htmlFor="time" className="block text-gray-700 font-medium mb-1">
               시 선택
           </label>
-          <HourDropdown title={hour || 12} onSelectFilter={handleHour} />
+          <HourDropdown title={hour || 12} kimages={kimages} onSelectFilter={handleHour} />
         </div>
         <div className=''>
           <label htmlFor="time" className="block text-gray-700 font-medium mb-1">
