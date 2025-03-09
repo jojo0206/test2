@@ -21,7 +21,7 @@ import {
 // 
 import { Grid, Menu, MenuItem } from "@mui/material";
 
-const DropdownGridMenu = () => {
+const DropdownGridMenu = ({kimages, onSelectFilter}: KimageDropdownProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -40,7 +40,7 @@ const DropdownGridMenu = () => {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        Open Dropdown
+        키워드 이미지 선택
       </Button>
       <Menu
         id="dropdown-menu"
@@ -55,12 +55,13 @@ const DropdownGridMenu = () => {
           },
         }}
       >
-        <MenuItem onClick={handleClose}>Option 1</MenuItem>
-        <MenuItem onClick={handleClose}>Option 2</MenuItem>
-        <MenuItem onClick={handleClose}>Option 3</MenuItem>
-        <MenuItem onClick={handleClose}>Option 4</MenuItem>
-        <MenuItem onClick={handleClose}>Option 5</MenuItem>
-        <MenuItem onClick={handleClose}>Option 6</MenuItem>
+        {kimages.map((item) => (
+          <MenuItem 
+            onClick={() => onSelectFilter(item.id)}
+          >
+            <img src={item.imageUrl} alt={`${item.name} Image`} width={"360px"} height={"360px"} />
+          </MenuItem>
+        ))}
       </Menu>
     </div>
   );
@@ -556,7 +557,7 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
           </div>
 
 
-{DropdownGridMenu()}
+        <DropdownGridMenu kimages={kimages} onSelectFilter={handleKimage} />
 
         <div className=''>
           <label htmlFor="repeat" className="block text-gray-700 font-medium mb-1">
