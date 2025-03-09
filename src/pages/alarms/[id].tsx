@@ -18,6 +18,55 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+// 
+import { Grid, Menu, MenuItem } from "@mui/material";
+
+const DropdownGridMenu = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <div>
+      <Button
+        aria-controls={open ? "dropdown-menu" : undefined}
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        Open Dropdown
+      </Button>
+      <Menu
+        id="dropdown-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          style: {
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 100px)", // 3열로 구성
+            gap: "10px",
+          },
+        }}
+      >
+        <MenuItem onClick={handleClose}>Option 1</MenuItem>
+        <MenuItem onClick={handleClose}>Option 2</MenuItem>
+        <MenuItem onClick={handleClose}>Option 3</MenuItem>
+        <MenuItem onClick={handleClose}>Option 4</MenuItem>
+        <MenuItem onClick={handleClose}>Option 5</MenuItem>
+        <MenuItem onClick={handleClose}>Option 6</MenuItem>
+      </Menu>
+    </div>
+  );
+};
+// 
+
 interface KimageDropdownProps {
   onSelectFilter: (newFilter: string) => void,
   kimages: Array<Kimage>
