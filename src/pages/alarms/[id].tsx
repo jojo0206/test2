@@ -562,7 +562,7 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
 
         {/* <DropdownGridMenu kimages={kimages} onSelectFilter={handleKimage} /> */}
 
-        <Button
+        {/* <Button
         onClick={() => setMenuOpen(true)}
         >
         키워드 이미지 선택
@@ -586,7 +586,7 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
             <img src={item.imageUrl} alt={`${item.name} Image`} width={"300px"} height={"300px"} />
           </MenuItem>
         ))}
-      </Menu>
+      </Menu> */}
 
         <div className=''>
           <label htmlFor="repeat" className="block text-gray-700 font-medium mb-1">
