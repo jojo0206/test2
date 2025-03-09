@@ -14,95 +14,26 @@ import axios from 'axios';
 import { Keyword, Kimage } from '@/interface';
 import { UploadIcon } from '../../components/icon/UploadIcon';
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-const hourItems = Array.from({ length: 24 }, (_, index) => index + 1);
-
-interface HourDropdownProps {
-  onSelectFilter: (newFilter: number) => void,
-  title: number
-}
-
-const HourDropdown = ({title, onSelectFilter}: HourDropdownProps) => (
-  <DropdownMenu>
-    <DropdownMenuTrigger asChild>
-      <Button variant="outline">{title} 시</Button>
-    </DropdownMenuTrigger>
-    <DropdownMenuContent 
-      className="w-56"
-      style={{
-        maxHeight: '500px',
-        overflowY: 'auto'
-      }}
-    >
-      {hourItems.map((item) => (
-        <DropdownMenuCheckboxItem 
-          checked={title === item}
-          onCheckedChange={() => onSelectFilter(item)}
-          // key={item}
-          // style={{ height: '50px', width: '100px' }}
-          // className="flex items-center px-4 bg-white"          
-        >
-          {item.toString().padStart(2, '0')}
-        </DropdownMenuCheckboxItem>
-      ))}
-    </DropdownMenuContent>
-  </DropdownMenu>
-);
-
-const minItems = Array.from({ length: 12 }, (_, index) => index * 5);
-
-interface MinDropdownProps {
-  onSelectFilter: (newFilter: number) => void,
-  title: number
-}
-
-const MinDropdown = ({title, onSelectFilter}: MinDropdownProps) => (
-  <DropdownMenu>
-    <DropdownMenuTrigger asChild>
-      <Button variant="outline">{title} 분</Button>
-    </DropdownMenuTrigger>
-    <DropdownMenuContent 
-      className="w-56"
-      style={{
-        maxHeight: '500px',
-        overflowY: 'auto'
-      }}
-    >
-      {minItems.map((item) => (
-        <DropdownMenuCheckboxItem 
-          checked={title === item}
-          onCheckedChange={() => onSelectFilter(item)}
-          // key={item}
-          // style={{ height: '50px', width: '100px' }}
-          // className="flex items-center px-4 bg-white"          
-        >
-          {item.toString().padStart(2, '0')}
-        </DropdownMenuCheckboxItem>
-      ))}
-    </DropdownMenuContent>
-  </DropdownMenu>
-);
 
 interface KimageProps {
   kimage: Kimage
-  keywords: Array<Keyword>
 }
   
 const KimageDetailPage = ({kimage}: KimageProps) => {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  const [keywords, setKeywords] = useState<string>(kimage.keywords || "")
+
   const [name, setName] = useState<string>(kimage.name || "")
   const [desc, setDesc] = useState<string>(kimage.desc || "")
 
   const [imageURL, setImageURL] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleKeywords = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setKeywords(event.target.value)
+  }  
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -154,6 +85,16 @@ const KimageDetailPage = ({kimage}: KimageProps) => {
 
     try {
       // const { id,name,sendType,sendUserIdList,contents, repeat, weekDays, hour, minute, imageUrl } = req.body.data;
+
+      // const keywordsResponse = await axios.post('/api/keywords/update', {
+      //   data: {
+      //     id: kimage.id,
+      //     desc: desc,
+      //     imageUrl: imageUrl,
+      //     name: name
+      //   }
+      // });
+
       const response = await axios.post('/api/kimages/update', {
         data: {
           id: kimage.id,
@@ -267,6 +208,20 @@ const KimageDetailPage = ({kimage}: KimageProps) => {
 
         </div>
 
+
+        <div>
+          <label htmlFor="body" className="block text-gray-700 font-medium mb-1">
+            키워드 목록(줄바꿈으로 구분)
+          </label>
+          <Textarea
+            id="keywords"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            value={keywords}
+            onChange={handleKeywords}
+          />
+        </div>
+
+
         <div className="flex justify-end gap-4">
           <button
             type="submit"
@@ -346,12 +301,19 @@ export const getServerSideProps: GetServerSideProps = async (context:GetServerSi
             createDt: docSnapshot.data().createDt ? docSnapshot.data().createDt.toDate().toISOString() : null,
         };
 
-        kimage.keywords = keywords;
+        var keywordList = '';
+
+        for (let i = 1; i <= keywords.length; i++) {
+          const keyword = keywords[i];
+          keywordList += keyword.content;
+          keywordList += '\n';
+      }
+
+        kimage.keywords = keywordList;
         
         return {
             props: {
                 kimage: kimage,
-                keywords: keywords,
             },
         };
 
