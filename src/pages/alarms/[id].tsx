@@ -30,7 +30,7 @@ const DropdownGridMenu = ({kimages, onSelectFilter}: KimageDropdownProps) => {
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    // setAnchorEl(null);
   };
 
   return (
