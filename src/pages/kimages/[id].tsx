@@ -305,8 +305,10 @@ export const getServerSideProps: GetServerSideProps = async (context:GetServerSi
 
         for (let i = 1; i <= keywords.length; i++) {
           const keyword = keywords[i];
-          keywordList += keyword;
-          keywordList += '\n';
+          if (keyword != null) {
+            keywordList += keyword.id;
+            keywordList += '\n';
+          }
       }
 
         kimage.keywords = keywordList;
