@@ -305,7 +305,7 @@ export const getServerSideProps: GetServerSideProps = async (context:GetServerSi
 
         for (let i = 1; i <= keywords.length; i++) {
           const keyword = keywords[i];
-          keywordList += 'keywords.length';
+          keywordList += keyword.id;
           keywordList += '\n';
       }
 
