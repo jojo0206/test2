@@ -18,6 +18,38 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+interface KimageDropdownProps {
+  onSelectFilter: (newFilter: number) => void,
+  kimages: Array<Kimage>
+}
+
+const KimageDropdown = ({kimages, onSelectFilter}: KimageDropdownProps) => (
+  <DropdownMenu>
+    <DropdownMenuTrigger asChild>
+      <Button variant="outline">키워드 이미지 선택</Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent 
+      className="w-156"
+      style={{
+        maxHeight: '500px',
+        overflowY: 'auto'
+      }}
+    >
+      {hourItems.map((item) => (
+        <DropdownMenuCheckboxItem 
+          checked={false}
+          onCheckedChange={() => onSelectFilter(item)}
+          // key={item}
+          // style={{ height: '50px', width: '100px' }}
+          // className="flex items-center px-4 bg-white"          
+        >
+          {kimages[0].name}
+        </DropdownMenuCheckboxItem>
+      ))}
+    </DropdownMenuContent>
+  </DropdownMenu>
+);
+
 const hourItems = Array.from({ length: 24 }, (_, index) => index + 1);
 
 interface HourDropdownProps {
@@ -46,7 +78,7 @@ const HourDropdown = ({title, kimages, onSelectFilter}: HourDropdownProps) => (
           // style={{ height: '50px', width: '100px' }}
           // className="flex items-center px-4 bg-white"          
         >
-          {item.toString().padStart(2, '0')} {kimages[0].id}
+          {item.toString().padStart(2, '0')}
         </DropdownMenuCheckboxItem>
       ))}
     </DropdownMenuContent>
@@ -420,6 +452,9 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
                 </button>
               </div>
             }
+
+            <KimageDropdown kimages={kimages} onSelectFilter={handleHour} />
+
             {!imageURL && !selectedFile &&
               <div 
                 onClick={() => handleIconClick("store")}
