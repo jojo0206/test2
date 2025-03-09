@@ -40,7 +40,6 @@ const KimageDropdown = ({kimages, onSelectFilter}: KimageDropdownProps) => (
           checked={false}
           onCheckedChange={() => onSelectFilter(item.id)}
         >
-          {item.id}
           <img src={item.imageUrl} alt={`${item.name} Image`} width={"360px"} height={"360px"} />
         </DropdownMenuCheckboxItem>
       ))}
@@ -449,27 +448,27 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
             <label htmlFor="imageUrl" className="block text-gray-700 font-medium mb-1">
               이미지 URL
             </label>
-            {/* {imageURL && 
+            {imageURL && 
               <div className='flex justify-center items-center flex-col'>
                 <img src={imageURL} alt={`${alarm.name} Image`} width={"360px"} height={"360px"} />
                 <button onClick={() => setImageURL("")} className="mt-4 bg-red-500 text-white px-4 py-2 rounded">
                   파일 선택
                 </button>
               </div>
-            } */}
+            }
             {kimageId && 
               <div className='flex justify-center items-center flex-col'>
                 <img src={kimages.find((kimage)=>(kimage.id == kimageId))?.imageUrl} alt={`Image`} width={"360px"} height={"360px"} />
-                {/* <button onClick={() => setImageURL("")} className="mt-4 bg-red-500 text-white px-4 py-2 rounded">
+                <button onClick={() => setImageURL("")} className="mt-4 bg-red-500 text-white px-4 py-2 rounded">
                   파일 선택
-                </button> */}
+                </button>
               </div>
             }
 
             <KimageDropdown kimages={kimages} onSelectFilter={handleKimage} />
 
 
-            {/* {!imageURL && !selectedFile &&
+            {!imageURL && !selectedFile &&
               <div 
                 onClick={() => handleIconClick("store")}
                 className='bg-slate-200 w-100 h-100 flex justify-center items-center flex-col py-4 cursor-pointer'
@@ -481,7 +480,7 @@ const AlarmDetailPage = ({alarm, kimages}: AlarmProps) => {
                   </span>
                 </p>
               </div>
-            } */}
+            }
             {!imageURL && selectedFile && 
               <div className="flex flex-col items-center justify-center text-center mt-4">
                 <p className="text-gray-600 dark:text-gray-400">선택된 파일 : {selectedFile.name}</p>
