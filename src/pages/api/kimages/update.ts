@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           if (keyword != '' && keyword != null && docRef != null && docRef.id != null) {
             const content = keyword;
             const imageId = docRef.id;
-            const keywordDocRef = await addDoc(collection(db, "keywords"), { content, name, imageId, createDt: serverTimestamp() });
+            const keywordDocRef = await addDoc(collection(db, "keywords"), { content, imageId, createDt: serverTimestamp() });
           }
         }
         
@@ -46,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           if (keyword != '' && keyword != null) {
             const content = keyword;
             const imageId = id;
-            const keywordDocRef = await addDoc(collection(db, "keywords"), { content, name, imageId, createDt: serverTimestamp() });
+            const keywordDocRef = await addDoc(collection(db, "keywords"), { content, imageId, createDt: serverTimestamp() });
           }
         }
 
